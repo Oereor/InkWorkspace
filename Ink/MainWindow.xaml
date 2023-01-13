@@ -1,0 +1,97 @@
+﻿<Window x:Class="Ink.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ink"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Ink Workspace" Height="800" Width="1400" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Click="MenuItem_File_New_Click"/>
+                <MenuItem Header="New window" Click="MenuItem_File_NewWindow_Click"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="MenuItem_File_Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Background">
+                <MenuItem Header="Background colour">
+                    <MenuItem Header="White"/>
+                    <MenuItem Header="Black"/>
+                    <MenuItem Header="Grey"/>
+                    <MenuItem Header="Red"/>
+                    <MenuItem Header="Orange"/>
+                    <MenuItem Header="Yellow"/>
+                    <MenuItem Header="Green"/>
+                    <MenuItem Header="Blue"/>
+                    <MenuItem Header="Purple"/>
+                    <Separator/>
+                    <MenuItem Header="Customize"/>
+                </MenuItem>
+                <MenuItem Header="Background image"/>
+                <Separator/>
+                <MenuItem Header="Reset background"/>
+            </MenuItem>
+            <MenuItem Header="Object">
+                <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
+                <MenuItem Header="New image box"/>
+            </MenuItem>
+            <MenuItem Header="Property">
+                <MenuItem Header="View value history"/>
+                <Separator/>
+                <MenuItem Header="Reset value of selected property"/>
+                <MenuItem Header="Reset values of all properties"/>
+            </MenuItem>
+        </Menu>
+        <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0"/>
+        <Canvas x:Name="canvas_PropertiesPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3">
+            <ComboBox x:Name="comboBox_Objects" Style="{StaticResource MaterialDesignFilledComboBox}" md:ComboBoxAssist.ShowSelectedItem="False" md:HintAssist.Hint="Object" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Canvas.Top="5" SelectionChanged="ComboBox_Objects_SelectionChanged" DropDownOpened="ComboBox_Objects_DropDownOpened"/>
+            <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="50" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>
+            <GroupBox x:Name="groupBox_Type" Header="TYPE: " Canvas.Top="105" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}">
+                <StackPanel>
+                    <TextBox x:Name="textBox_X" md:HintAssist.Hint="X" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
+                    <TextBox x:Name="textBox_Y" md:HintAssist.Hint="Y" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
+                    <TextBox x:Name="textBox_Width" md:HintAssist.Hint="Width" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
+                    <TextBox x:Name="textBox_Height" md:HintAssist.Hint="Height" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
+                </StackPanel>
+            </GroupBox>
+            <CheckBox x:Name="checkBox_Visible" Content="Visible" Canvas.Top="310"/>
+            <CheckBox x:Name="checkBox_SyncProperty" Canvas.Top="340" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden">
+                <CheckBox.Content>
+                    <ComboBox md:HintAssist.Hint="Sync selected property with" IsEnabled="{Binding ElementName=checkBox_SyncProperty,Path=IsChecked}"/>
+                </CheckBox.Content>
+            </CheckBox>
+            <GroupBox x:Name="groupBox_Properties" Header="PROPERTIES" Canvas.Top="375" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Height="250" Visibility="Hidden">
+                <ListBox x:Name="list_Properties" MaxHeight="{Binding ElementName=groupBox_Properties,Path=ActualHeight}" SelectionChanged="List_Properties_SelectionChanged"/>
+            </GroupBox>
+            <TextBox x:Name="textBox_PropertyValue" Style="{StaticResource MaterialDesignOutlinedTextBox}" md:HintAssist.Hint="Property Value" md:HintAssist.IsFloating="True"  Canvas.Top="635" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden" AcceptsReturn="True"/>
+            <ComboBox x:Name="comboBox_PropertyValue" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Property Value" md:HintAssist.IsFloating="True"  Canvas.Top="635" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden" SelectionChanged="ComboBox_PropertyValue_SelectionChanged"/>
+            <CheckBox x:Name="checkBox_PropertyValue" Canvas.Top="635" Content="Property Value" Visibility="Hidden"/>
+        </Canvas>
+        <Slider x:Name="slider_X" Grid.Row="2" Grid.Column="0" Width="{Binding ElementName=canvas_Page,Path=ActualWidth}" Maximum="{Binding ElementName=canvas_Page,Path=ActualWidth}" Visibility="Hidden"/>
+        <Slider x:Name="slider_Y" Grid.Row="1" Grid.Column="1" IsDirectionReversed="True" Orientation="Vertical" Height="{Binding ElementName=canvas_Page,Path=ActualHeight}" Maximum="{Binding ElementName=canvas_Page,Path=ActualHeight}" Visibility="Hidden"/>
+        <ToolBar Grid.Row="3" Grid.Column="0">
+            <ComboBox x:Name="comboBox_Pages" md:HintAssist.Hint="Page" md:HintAssist.IsFloating="True" SelectionChanged="ComboBox_Pages_SelectionChanged" />
+            <Separator/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Add"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove all"/>
+            <Separator/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Rename"/>
+        </ToolBar>
+    </Grid>
+</Window>

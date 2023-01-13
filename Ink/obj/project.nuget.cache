@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "i4gVb3+2sKgsJuYrtbV5FM61uJrXUQWzBx1jOy0dRq7kedikQ4A3ViuNoRDVXA11pu6fPy0Rd7wqfgUGsY6vxQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\lenovo\\OneDrive\\Programs\\C#\\Ink\\Ink\\Ink.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lenovo\\.nuget\\packages\\materialdesigncolors\\2.1.0\\materialdesigncolors.2.1.0.nupkg.sha512",
+    "C:\\Users\\lenovo\\.nuget\\packages\\materialdesignthemes\\4.7.0\\materialdesignthemes.4.7.0.nupkg.sha512",
+    "C:\\Users\\lenovo\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"
+  ],
+  "logs": []
+}
