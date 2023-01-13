@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Ink"
   ],
-  "SelectedNode": "\\Ink.sln",
+  "SelectedNode": "\\Ink\\Objects.cs",
   "PreviewInSolutionExplorer": false
 }
