@@ -234,9 +234,7 @@ namespace Ink
                     {
                         selectedProperty.DisableValueSynchronization();
                         selectedProperty.SyncValueWith(selectedSyncObject.Properties[selectedProperty.Name], selectedSyncObject);
-                        textBox_PropertyValue.IsEnabled = false;
-                        comboBox_PropertyValue.IsEnabled = false;
-                        checkBox_PropertyValue.IsEnabled = false;
+                        SetValueEditState(false);
                     }
                 }
                 else
@@ -252,9 +250,7 @@ namespace Ink
                     if (list_Properties.SelectedItem is InkProperty selectedProperty)
                     {
                         selectedProperty.DisableValueSynchronization();
-                        textBox_PropertyValue.IsEnabled = true;
-                        comboBox_PropertyValue.IsEnabled = true;
-                        checkBox_PropertyValue.IsEnabled = true;
+                        SetValueEditState(true);
                     }
                 }
             }
@@ -279,16 +275,53 @@ namespace Ink
 
         private void CheckBox_SyncProperty_Checked(object sender, RoutedEventArgs e)
         {
-            textBox_PropertyValue.IsEnabled = false;
-            comboBox_PropertyValue.IsEnabled = false;
-            checkBox_PropertyValue.IsEnabled = false;
+            SetValueEditState(false);
         }
 
         private void CheckBox_SyncProperty_Unchecked(object sender, RoutedEventArgs e)
         {
-            textBox_PropertyValue.IsEnabled = true;
-            comboBox_PropertyValue.IsEnabled = true;
-            checkBox_PropertyValue.IsEnabled = true;
+            SetValueEditState(true);
+        }
+
+        private void SetValueEditState(bool enabled)
+        {
+            if (enabled)
+            {
+                textBox_PropertyValue.IsEnabled = true;
+                comboBox_PropertyValue.IsEnabled = true;
+                checkBox_PropertyValue.IsEnabled = true;
+            }
+            else
+            {
+                textBox_PropertyValue.IsEnabled = false;
+                comboBox_PropertyValue.IsEnabled = false;
+                checkBox_PropertyValue.IsEnabled = false;
+            }
+        }
+
+        private void MenuItem_ResetSelectedProperty_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboBox_Objects.SelectedIndex >= 0 && list_Properties.SelectedItem is InkProperty selectedProperty)
+            {
+                selectedProperty.Value = selectedProperty.DefaultValue;
+                selectedProperty.DisableValueSynchronization();
+                checkBox_SyncProperty.IsChecked = false;
+                SetValueEditState(true);
+            }
+        }
+
+        private void MenuItem_ResetAllProperties_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboBox_Objects.SelectedItem is InkObject selectedObject)
+            {
+                foreach (InkProperty property in selectedObject.Properties.Values)
+                {
+                    property.Value = property.DefaultValue;
+                    property.DisableValueSynchronization();
+                    checkBox_SyncProperty.IsChecked = false;
+                    SetValueEditState(true);
+                }
+            }
         }
     }
 

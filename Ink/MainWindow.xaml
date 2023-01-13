@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="19*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="17*"/>
@@ -53,14 +53,14 @@
             <MenuItem Header="Property">
                 <MenuItem Header="View value history"/>
                 <Separator/>
-                <MenuItem Header="Reset value of selected property"/>
-                <MenuItem Header="Reset values of all properties"/>
+                <MenuItem x:Name="menuItem_ResetSelectedProperty" Header="Reset value and disable value sync of selected property " Click="MenuItem_ResetSelectedProperty_Click"/>
+                <MenuItem x:Name="menuItem_ResetAllProperties" Header="Reset values and disable values sync of all properties" Click="MenuItem_ResetAllProperties_Click"/>
             </MenuItem>
         </Menu>
         <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0"/>
         <Canvas x:Name="canvas_PropertiesPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3">
-            <ComboBox x:Name="comboBox_Objects" Style="{StaticResource MaterialDesignFilledComboBox}" md:ComboBoxAssist.ShowSelectedItem="False" md:HintAssist.Hint="Object" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Canvas.Top="5" SelectionChanged="ComboBox_Objects_SelectionChanged" DropDownOpened="ComboBox_Objects_DropDownOpened"/>
-            <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="50" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>
+            <ComboBox x:Name="comboBox_Objects" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:ComboBoxAssist.ShowSelectedItem="False" md:HintAssist.Hint="Object" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Canvas.Top="5" SelectionChanged="ComboBox_Objects_SelectionChanged" DropDownOpened="ComboBox_Objects_DropDownOpened"/>
+            <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="51" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>
             <GroupBox x:Name="groupBox_Type" Header="TYPE: " Canvas.Top="105" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}">
                 <StackPanel>
                     <TextBox x:Name="textBox_X" md:HintAssist.Hint="X" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
@@ -82,7 +82,7 @@
         <Slider x:Name="slider_X" Grid.Row="2" Grid.Column="0" Width="{Binding ElementName=canvas_Page,Path=ActualWidth}" Maximum="{Binding ElementName=canvas_Page,Path=ActualWidth}" Visibility="Hidden"/>
         <Slider x:Name="slider_Y" Grid.Row="1" Grid.Column="1" IsDirectionReversed="True" Orientation="Vertical" Height="{Binding ElementName=canvas_Page,Path=ActualHeight}" Maximum="{Binding ElementName=canvas_Page,Path=ActualHeight}" Visibility="Hidden"/>
         <ToolBar Grid.Row="3" Grid.Column="0">
-            <ComboBox x:Name="comboBox_Pages" md:HintAssist.Hint="Page" md:HintAssist.IsFloating="True" SelectionChanged="ComboBox_Pages_SelectionChanged" />
+            <ComboBox x:Name="comboBox_Pages" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Page" md:HintAssist.IsFloating="True" SelectionChanged="ComboBox_Pages_SelectionChanged" />
             <Separator/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Add"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove"/>

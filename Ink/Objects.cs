@@ -289,7 +289,7 @@ namespace Ink
                 { ValueList = new string[] { "Black", "White", "Grey", "Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Customize" } } },
 
                 { "Background", new InkProperty("Background", InkPropertyValueType.List, "None")
-                { ValueList = new string[] { "Black", "White", "Grey", "Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Customize" } } }
+                { ValueList = new string[] { "None", "Black", "White", "Grey", "Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Customize" } } }
             };
             foreach (InkProperty property in Properties.Values)
             {
