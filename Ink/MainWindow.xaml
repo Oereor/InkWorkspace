@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="19*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="55"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="17*"/>
@@ -49,6 +49,9 @@
             <MenuItem Header="Object">
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
                 <MenuItem Header="New image box"/>
+                <Separator/>
+                <MenuItem Header="Remove selected object"/>
+                <MenuItem Header="Remove all objects on this page"/>
             </MenuItem>
             <MenuItem Header="Property">
                 <MenuItem Header="View value history"/>
@@ -60,7 +63,7 @@
         <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0"/>
         <Canvas x:Name="canvas_PropertiesPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3">
             <ComboBox x:Name="comboBox_Objects" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:ComboBoxAssist.ShowSelectedItem="False" md:HintAssist.Hint="Object" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Canvas.Top="5" SelectionChanged="ComboBox_Objects_SelectionChanged" DropDownOpened="ComboBox_Objects_DropDownOpened"/>
-            <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="51" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>
+            <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update of name takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="51" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>
             <GroupBox x:Name="groupBox_Type" Header="TYPE: " Canvas.Top="105" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}">
                 <StackPanel>
                     <TextBox x:Name="textBox_X" md:HintAssist.Hint="X" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
