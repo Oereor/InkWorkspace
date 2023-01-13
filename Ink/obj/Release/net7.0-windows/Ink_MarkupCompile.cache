@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-D:\GitRepos\InkWorkspace\Ink\obj\Debug\net7.0-windows\
+D:\GitRepos\InkWorkspace\Ink\obj\Release\net7.0-windows\
 Ink
 none
 false
-TRACE;DEBUG;NET;NET7_0;NETCOREAPP
+TRACE;RELEASE;NET;NET7_0;NETCOREAPP
 D:\GitRepos\InkWorkspace\Ink\App.xaml
 11407045341
 

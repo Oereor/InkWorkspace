@@ -11,17 +11,19 @@ using System.Windows.Media.Imaging;
 
 namespace Ink
 {
+    /* 指定属性值的类型 */
     public enum InkPropertyValueType
     {
-        Boolean,
-        List,
-        Input
+        Boolean,    // 显示为一个CheckBox
+        List,   // 给定值列表
+        Input   // 用户自行输入
     }
 
+    /* InkProperty类中InkPropertyValueChanged事件的EventArgs */
     public class InkPropertyValueChangedEventArgs : EventArgs
     {
-        public string Name { get; }
-        public string NewValue { get; }
+        public string Name { get; } // 值发生改变的属性名称
+        public string NewValue { get; } // 改变后的属性值
         public InkPropertyValueType ValueType { get; }
 
         public InkPropertyValueChangedEventArgs(string name, string newValue, InkPropertyValueType valueType)
@@ -34,10 +36,11 @@ namespace Ink
 
     public delegate void InkPropertyValueChangedEventHandler(object sender, InkPropertyValueChangedEventArgs e);
 
+    /* InkObject对象的属性 */
     public class InkProperty : INotifyPropertyChanged
     {
         private string value = "";
-        private InkProperty? valueSource;
+        private InkProperty? valueSource;   // 启用ValueSync时属性值的来源，即绑定同步的另一个InkProperty对象
 
         public string Name { get; }
         public string Value
@@ -50,7 +53,7 @@ namespace Ink
                 InkPropertyValueChanged?.Invoke(this, new InkPropertyValueChangedEventArgs(Name, Value, ValueType));
             }
         }
-        public Stack<string> ValueHistory { get; } = new(64);
+        public Stack<string> ValueHistory { get; } = new(64);   // 用于实现回溯属性值
         public InkProperty? ValueSource
         {
             get { return valueSource; }
@@ -62,10 +65,10 @@ namespace Ink
         }
         public InkPropertyValueType ValueType { get; }
         public string DefaultValue { get; }
-        public string[]? ValueList { get; init; }
+        public string[]? ValueList { get; init; }   // 若ValueType是List，该列表存储给定的属性值；否则为null
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public event InkPropertyValueChangedEventHandler? InkPropertyValueChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;  // 实现INotifyPropertyChanged接口
+        public event InkPropertyValueChangedEventHandler? InkPropertyValueChanged;  // 自定义用于同步属性值的事件
 
         public InkProperty(string name, InkPropertyValueType valueType, string defaultValue)
         {
@@ -88,7 +91,7 @@ namespace Ink
         {
             for (int i = 0; i < index && ValueHistory.Count > 0; i++)
             {
-                ValueHistory.Pop();
+                ValueHistory.Pop(); // 这意味着不能Redo
             }
             if (ValueHistory.Count > 0)
             {
@@ -100,7 +103,8 @@ namespace Ink
         {
             if (property.ValueType == this.ValueType)
             {
-                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
+                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 同步是通过订阅事件完成的
+                // 可能出现的问题：A订阅B，B又订阅A
                 ValueSource = property;
             }
         }
@@ -138,7 +142,7 @@ namespace Ink
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
             }
         }
-        public virtual double X
+        public virtual double X // 在Canvas上的横坐标
         {
             get { return ShownElement.Margin.Left; }
             set
@@ -147,7 +151,7 @@ namespace Ink
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(X)));
             }
         }
-        public virtual double Y
+        public virtual double Y // 在Canvas上的纵坐标
         {
             get { return ShownElement.Margin.Top; }
             set
@@ -183,10 +187,10 @@ namespace Ink
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Visible)));
             }
         }
-        public abstract string Type { get; }
+        public abstract string Type { get; }    // 并没有很大的实际意义
         public abstract Dictionary<string, InkProperty> Properties { get; }
 
-        protected abstract FrameworkElement ShownElement { get; }
+        protected abstract FrameworkElement ShownElement { get; }   // 实际显示出来的控件
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -206,7 +210,7 @@ namespace Ink
         }
     }
 
-    public class InkPage : INotifyPropertyChanged
+    public class InkPage : INotifyPropertyChanged   // 抽象出的Page对象
     {
         private string name = "";
 
@@ -225,7 +229,7 @@ namespace Ink
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
             }
         }
-        public ObservableCollection<InkObject> Objects { get; }
+        public ObservableCollection<InkObject> Objects { get; } // 包含页面上所有InkObject，Page的主体
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -237,8 +241,8 @@ namespace Ink
 
     public class InkTextBox : InkObject
     {
-        private TextBox textBox = new();
-        private TextBlock textBlock = new();
+        private TextBox textBox = new();    // 在InkTextBox获得焦点时显示以直接编辑文本
+        private TextBlock textBlock = new();    // 无焦点时显示
 
         public InkTextBox(string name) : base(name)
         {
@@ -271,8 +275,8 @@ namespace Ink
             };
             foreach (InkProperty property in Properties.Values)
             {
-                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
-                property.Value = property.DefaultValue;
+                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 以便在Property更新时同时更新前端的显示
+                property.Value = property.DefaultValue; 
             }
             X = 514;
             Y = 114;
@@ -305,6 +309,7 @@ namespace Ink
             return fonts;
         }
 
+        /* 响应后台属性值的更改 */
         private void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
         {
             switch (e.Name)

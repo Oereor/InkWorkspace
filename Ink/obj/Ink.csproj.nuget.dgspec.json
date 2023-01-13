@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lenovo\\OneDrive\\Programs\\C#\\Ink\\Ink\\Ink.csproj": {}
+    "D:\\GitRepos\\InkWorkspace\\Ink\\Ink.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lenovo\\OneDrive\\Programs\\C#\\Ink\\Ink\\Ink.csproj": {
+    "D:\\GitRepos\\InkWorkspace\\Ink\\Ink.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lenovo\\OneDrive\\Programs\\C#\\Ink\\Ink\\Ink.csproj",
+        "projectUniqueName": "D:\\GitRepos\\InkWorkspace\\Ink\\Ink.csproj",
         "projectName": "Ink",
-        "projectPath": "C:\\Users\\lenovo\\OneDrive\\Programs\\C#\\Ink\\Ink\\Ink.csproj",
+        "projectPath": "D:\\GitRepos\\InkWorkspace\\Ink\\Ink.csproj",
         "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lenovo\\OneDrive\\Programs\\C#\\Ink\\Ink\\obj\\",
+        "outputPath": "D:\\GitRepos\\InkWorkspace\\Ink\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\lenovo\OneDrive\Programs\C#\Ink\Ink\obj\Debug\net7.0-windows\
+D:\GitRepos\InkWorkspace\Ink\obj\Debug\net7.0-windows\
 Ink
 none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
-C:\Users\lenovo\OneDrive\Programs\C#\Ink\Ink\App.xaml
+D:\GitRepos\InkWorkspace\Ink\App.xaml
 11407045341
 
 61112057724
 201-553464109
 MainWindow.xaml;
 
-True
+False
 
