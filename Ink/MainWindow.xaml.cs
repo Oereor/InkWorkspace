@@ -101,6 +101,7 @@ namespace Ink
                     slider_X.Visibility = Visibility.Visible;
                     slider_Y.Visibility = Visibility.Visible;
                     checkBox_SyncProperty.Visibility = Visibility.Visible;
+                    comboBox_SyncPropertyWithObject.Visibility = Visibility.Visible;
                     groupBox_Properties.Visibility = Visibility.Visible;
                     list_Properties.ItemsSource = currentObject.Properties.Values;
                     if (list_Properties.Items.Count > 0)
@@ -168,6 +169,20 @@ namespace Ink
                     default:
                         break;
                 }
+                binding = new Binding
+                {
+                    Source = selectedProperty,
+                    Path = new PropertyPath("ValueSyncEnabled"),
+                    Mode = BindingMode.OneWay
+                };
+                checkBox_SyncProperty.SetBinding(CheckBox.IsCheckedProperty, binding);
+                binding = new Binding
+                {
+                    Source = selectedProperty,
+                    Path = new PropertyPath("ValueSourceObject"),
+                    Mode = BindingMode.OneWay
+                };
+                comboBox_SyncPropertyWithObject.SetBinding(ComboBox.SelectedItemProperty, binding);
             }
         }
 
@@ -196,6 +211,46 @@ namespace Ink
         {
             this.Close();
         }
+
+        private void CheckBox_SyncProperty_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBox_SyncProperty.IsChecked==true)
+            {
+                if (comboBox_SyncPropertyWithObject.SelectedItem is InkObject selectedSyncObject)
+                {
+                    if (list_Properties.SelectedItem is InkProperty selectedProperty)
+                    {
+                        selectedProperty.DisableValueSynchronization();
+                        selectedProperty.SyncValueWith(selectedSyncObject.Properties[selectedProperty.Name], selectedSyncObject);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select which object to sync with first. ", "Select Object First", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else if (checkBox_SyncProperty.IsChecked==false)
+            {
+                if (comboBox_SyncPropertyWithObject.SelectedItem is InkObject)
+                {
+                    if (list_Properties.SelectedItem is InkProperty selectedProperty)
+                    {
+                        selectedProperty.DisableValueSynchronization();
+                    }
+                }
+            }
+        }
+
+        private void ComboBox_SyncPropertyWithObject_DropDownOpened(object sender, EventArgs e)
+        {
+            if (comboBox_Objects.SelectedIndex >= 0 && currentObject is not null)
+            {
+                List<InkObject> list_SyncObjects = new(currentPage.Objects);
+                list_SyncObjects.Remove(currentObject);
+                comboBox_SyncPropertyWithObject.ItemsSource = list_SyncObjects;
+            }
+        }
+
     }
 
     public partial class MainWindow : Window

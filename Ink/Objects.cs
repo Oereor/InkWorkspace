@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -41,6 +42,7 @@ namespace Ink
     {
         private string value = "";
         private InkProperty? valueSource;   // 启用ValueSync时属性值的来源，即绑定同步的另一个InkProperty对象
+        private InkObject? valueSourceObject;
 
         public string Name { get; }
         public string Value
@@ -63,9 +65,19 @@ namespace Ink
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ValueSource)));
             }
         }
+        public InkObject? ValueSourceObject
+        {
+            get { return valueSourceObject; }
+            set
+            {
+                valueSourceObject = value;
+                PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(ValueSourceObject)));
+            }
+        }
         public InkPropertyValueType ValueType { get; }
         public string DefaultValue { get; }
         public string[]? ValueList { get; init; }   // 若ValueType是List，该列表存储给定的属性值；否则为null
+        public bool ValueSyncEnabled { get; private set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;  // 实现INotifyPropertyChanged接口
         public event InkPropertyValueChangedEventHandler? InkPropertyValueChanged;  // 自定义用于同步属性值的事件
@@ -76,6 +88,7 @@ namespace Ink
             ValueType = valueType;
             Value = defaultValue;
             DefaultValue = defaultValue;
+            ValueSyncEnabled = false;
         }
 
         private void SetValue(string value, bool addToValueHistory = true)
@@ -99,13 +112,15 @@ namespace Ink
             }
         }
 
-        public void SyncValueWith(InkProperty property)
+        public void SyncValueWith(InkProperty property, InkObject sourceObject)
         {
             if (property.ValueType == this.ValueType)
             {
                 property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 同步是通过订阅事件完成的
                 // 可能出现的问题：A订阅B，B又订阅A
                 ValueSource = property;
+                valueSourceObject = sourceObject;
+                ValueSyncEnabled = true;
             }
         }
 
@@ -115,6 +130,8 @@ namespace Ink
             {
                 ValueSource.InkPropertyValueChanged -= Property_InkPropertyValueChanged;
                 ValueSource = null;
+                ValueSourceObject= null;
+                ValueSyncEnabled = false;
             }
         }
 

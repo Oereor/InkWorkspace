@@ -70,11 +70,8 @@
                 </StackPanel>
             </GroupBox>
             <CheckBox x:Name="checkBox_Visible" Content="Visible" Canvas.Top="310"/>
-            <CheckBox x:Name="checkBox_SyncProperty" Canvas.Top="340" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden">
-                <CheckBox.Content>
-                    <ComboBox md:HintAssist.Hint="Sync selected property with" IsEnabled="{Binding ElementName=checkBox_SyncProperty,Path=IsChecked}"/>
-                </CheckBox.Content>
-            </CheckBox>
+            <CheckBox x:Name="checkBox_SyncProperty" Canvas.Top="340" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden" Click="CheckBox_SyncProperty_Click"/>
+            <ComboBox x:Name="comboBox_SyncPropertyWithObject" Canvas.Top="330" Canvas.Left="22" md:HintAssist.Hint="Sync selected property with" md:HintAssist.IsFloating="True" IsEnabled="True" Visibility="Hidden" DropDownOpened="ComboBox_SyncPropertyWithObject_DropDownOpened"/>
             <GroupBox x:Name="groupBox_Properties" Header="PROPERTIES" Canvas.Top="375" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Height="250" Visibility="Hidden">
                 <ListBox x:Name="list_Properties" MaxHeight="{Binding ElementName=groupBox_Properties,Path=ActualHeight}" SelectionChanged="List_Properties_SelectionChanged"/>
             </GroupBox>
