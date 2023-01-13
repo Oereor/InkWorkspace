@@ -34,6 +34,7 @@ namespace Ink
         {
             currentPage = pages[comboBox_Pages.SelectedIndex];
             canvas_Page.Children.Clear();
+            /* 将选中Page的所有Object添加到显示区，并选中第一个Object（如果有） */
             foreach (InkObject element in currentPage.Objects)
             {
                 element.AddToPage(canvas_Page);
@@ -125,7 +126,7 @@ namespace Ink
 
         private void TextBox_Name_LostFocus(object sender, RoutedEventArgs e)
         {
-            comboBox_Objects.Items.Refresh();
+            comboBox_Objects.Items.Refresh();   // 更新Object组合框里的名称
         }
 
         private void List_Properties_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -172,6 +173,7 @@ namespace Ink
 
         private void ComboBox_PropertyValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Binding会出问题所以采用手动更新的方式
             if (comboBox_PropertyValue.SelectedIndex >= 0 && list_Properties.SelectedIndex >= 0 && currentObject is not null
                 && list_Properties.SelectedItem is InkProperty selectedProperty && comboBox_PropertyValue.SelectedItem is string selectedPropertyValue)
             {
