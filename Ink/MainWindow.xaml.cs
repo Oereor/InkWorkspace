@@ -214,7 +214,7 @@ namespace Ink
 
         private void CheckBox_SyncProperty_Click(object sender, RoutedEventArgs e)
         {
-            if (checkBox_SyncProperty.IsChecked==true)
+            if (checkBox_SyncProperty.IsChecked == true)
             {
                 if (comboBox_SyncPropertyWithObject.SelectedItem is InkObject selectedSyncObject)
                 {
@@ -222,20 +222,27 @@ namespace Ink
                     {
                         selectedProperty.DisableValueSynchronization();
                         selectedProperty.SyncValueWith(selectedSyncObject.Properties[selectedProperty.Name], selectedSyncObject);
+                        textBox_PropertyValue.IsEnabled = false;
+                        comboBox_PropertyValue.IsEnabled = false;
+                        checkBox_PropertyValue.IsEnabled = false;
                     }
                 }
                 else
                 {
                     MessageBox.Show("Please select which object to sync with first. ", "Select Object First", MessageBoxButton.OK, MessageBoxImage.Information);
+                    checkBox_SyncProperty.IsChecked = false;
                 }
             }
-            else if (checkBox_SyncProperty.IsChecked==false)
+            else if (checkBox_SyncProperty.IsChecked == false)
             {
                 if (comboBox_SyncPropertyWithObject.SelectedItem is InkObject)
                 {
                     if (list_Properties.SelectedItem is InkProperty selectedProperty)
                     {
                         selectedProperty.DisableValueSynchronization();
+                        textBox_PropertyValue.IsEnabled = true;
+                        comboBox_PropertyValue.IsEnabled = true;
+                        checkBox_PropertyValue.IsEnabled = true;
                     }
                 }
             }
@@ -247,10 +254,30 @@ namespace Ink
             {
                 List<InkObject> list_SyncObjects = new(currentPage.Objects);
                 list_SyncObjects.Remove(currentObject);
+                foreach (InkObject inkObject in list_SyncObjects)
+                {
+                    if (inkObject.Type != currentObject.Type)
+                    {
+                        list_SyncObjects.Remove(inkObject);
+                    }
+                }
                 comboBox_SyncPropertyWithObject.ItemsSource = list_SyncObjects;
             }
         }
 
+        private void CheckBox_SyncProperty_Checked(object sender, RoutedEventArgs e)
+        {
+            textBox_PropertyValue.IsEnabled = false;
+            comboBox_PropertyValue.IsEnabled = false;
+            checkBox_PropertyValue.IsEnabled = false;
+        }
+
+        private void CheckBox_SyncProperty_Unchecked(object sender, RoutedEventArgs e)
+        {
+            textBox_PropertyValue.IsEnabled = true;
+            comboBox_PropertyValue.IsEnabled = true;
+            checkBox_PropertyValue.IsEnabled = true;
+        }
     }
 
     public partial class MainWindow : Window

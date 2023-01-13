@@ -118,6 +118,7 @@ namespace Ink
             {
                 property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 同步是通过订阅事件完成的
                 // 可能出现的问题：A订阅B，B又订阅A
+                this.Value = property.Value;
                 ValueSource = property;
                 valueSourceObject = sourceObject;
                 ValueSyncEnabled = true;
