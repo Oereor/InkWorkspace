@@ -28,6 +28,7 @@ namespace Ink
             comboBox_Pages.ItemsSource = pages;
             comboBox_Pages.SelectedIndex = 0;
             currentPage = pages[0];
+            checkBox_Visible.IsEnabled = false;
         }
 
         private void ComboBox_Pages_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,6 +99,7 @@ namespace Ink
                         Path = new PropertyPath("Visible")
                     };
                     checkBox_Visible.SetBinding(CheckBox.IsCheckedProperty, binding);
+                    checkBox_Visible.IsEnabled = true;
                     slider_X.Visibility = Visibility.Visible;
                     slider_Y.Visibility = Visibility.Visible;
                     checkBox_SyncProperty.Visibility = Visibility.Visible;
@@ -109,6 +111,16 @@ namespace Ink
                         list_Properties.SelectedIndex = 0;
                     }
                 }
+            }
+            else
+            {
+                currentObject = null;
+                checkBox_Visible.IsEnabled = false;
+                slider_X.Visibility = Visibility.Hidden;
+                slider_Y.Visibility = Visibility.Hidden;
+                checkBox_SyncProperty.Visibility = Visibility.Hidden;
+                comboBox_SyncPropertyWithObject.Visibility = Visibility.Hidden;
+                groupBox_Properties.Visibility = Visibility.Hidden;
             }
         }
 
