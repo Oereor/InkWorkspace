@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PowerInk.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PowerInk.png" />
   </ItemGroup>
 
 </Project>

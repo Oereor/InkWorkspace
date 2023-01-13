@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Ink"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Ink Workspace" Height="800" Width="1400" WindowState="Maximized">
+        Title="Ink Workspace" Height="800" Width="1400" WindowState="Maximized" Icon="/PowerInk.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
