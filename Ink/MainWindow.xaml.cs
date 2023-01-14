@@ -188,6 +188,7 @@ namespace Ink
                     Mode = BindingMode.OneWay
                 };
                 checkBox_SyncProperty.SetBinding(CheckBox.IsCheckedProperty, binding);
+                SetComboBox_SyncPropertyWithObject_ItemsSource();
                 binding = new Binding
                 {
                     Source = selectedProperty,
@@ -258,15 +259,22 @@ namespace Ink
 
         private void ComboBox_SyncPropertyWithObject_DropDownOpened(object sender, EventArgs e)
         {
+            SetComboBox_SyncPropertyWithObject_ItemsSource();
+        }
+
+        private void SetComboBox_SyncPropertyWithObject_ItemsSource()
+        {
             if (comboBox_Objects.SelectedIndex >= 0 && currentObject is not null)
             {
-                List<InkObject> list_SyncObjects = new(currentPage.Objects);
-                list_SyncObjects.Remove(currentObject);
-                foreach (InkObject inkObject in list_SyncObjects)
+                List<InkObject> list_SyncObjects = new();
+                foreach (InkPage page in pages)
                 {
-                    if (inkObject.Type != currentObject.Type)
+                    foreach (InkObject inkObject in page.Objects)
                     {
-                        list_SyncObjects.Remove(inkObject);
+                        if (inkObject.Type == currentObject.Type && !(inkObject == currentObject))
+                        {
+                            list_SyncObjects.Add(inkObject);
+                        }
                     }
                 }
                 comboBox_SyncPropertyWithObject.ItemsSource = list_SyncObjects;
@@ -323,12 +331,18 @@ namespace Ink
                 }
             }
         }
+
+        private void Button_AddPage_Click(object sender, RoutedEventArgs e)
+        {
+            pages.Add(new InkPage($"Page{pageCounter++}"));
+            comboBox_Pages.SelectedIndex = comboBox_Pages.Items.Count - 1;
+        }
     }
 
     public partial class MainWindow : Window
     {
         private int pageCounter = 1, textBoxCounter = 1;
-        private ObservableCollection<InkPage> pages;
+        private readonly ObservableCollection<InkPage> pages;
         private InkPage currentPage;
         private InkObject? currentObject;
     }

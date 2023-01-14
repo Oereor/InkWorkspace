@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "gGuL6KSOunQ0oirhgGheQckNnPMjgSZmgnyHLJ1I0nFl2qRkeB8DWiJPdvNmhc19e2aD4XaHfdN3SlmQyh4NOg==",
+  "success": true,
+  "projectFilePath": "D:\\GitRepos\\InkWorkspace\\InkCodeEditor\\InkCodeEditor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lenovo\\.nuget\\packages\\materialdesigncolors\\2.1.0\\materialdesigncolors.2.1.0.nupkg.sha512",
+    "C:\\Users\\lenovo\\.nuget\\packages\\materialdesignthemes\\4.7.0\\materialdesignthemes.4.7.0.nupkg.sha512",
+    "C:\\Users\\lenovo\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"
+  ],
+  "logs": []
+}

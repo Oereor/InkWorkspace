@@ -59,9 +59,14 @@
                 <MenuItem x:Name="menuItem_ResetSelectedProperty" Header="Reset value and disable value sync of selected property " Click="MenuItem_ResetSelectedProperty_Click"/>
                 <MenuItem x:Name="menuItem_ResetAllProperties" Header="Reset values and disable values sync of all properties" Click="MenuItem_ResetAllProperties_Click"/>
             </MenuItem>
+            <MenuItem Header="Code">
+                <MenuItem Header="Open new code editor window"/>
+                <Separator/>
+                <MenuItem Header="Run submitted code"/>
+            </MenuItem>
         </Menu>
-        <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0" />
-        <Canvas x:Name="canvas_PropertiesPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3">
+        <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0" Panel.ZIndex="-2" />
+        <Canvas x:Name="canvas_PropertiesPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3" Panel.ZIndex="0">
             <ComboBox x:Name="comboBox_Objects" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:ComboBoxAssist.ShowSelectedItem="False" md:HintAssist.Hint="Object" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Canvas.Top="5" SelectionChanged="ComboBox_Objects_SelectionChanged" DropDownOpened="ComboBox_Objects_DropDownOpened"/>
             <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update of name takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="51" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>
             <GroupBox x:Name="groupBox_Type" Header="TYPE: " Canvas.Top="105" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}">
@@ -82,12 +87,12 @@
             <ComboBox x:Name="comboBox_PropertyValue" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Property Value" md:HintAssist.IsFloating="True"  Canvas.Top="635" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden" SelectionChanged="ComboBox_PropertyValue_SelectionChanged"/>
             <CheckBox x:Name="checkBox_PropertyValue" Canvas.Top="635" Content="Property Value" Visibility="Hidden"/>
         </Canvas>
-        <Slider x:Name="slider_X" Grid.Row="2" Grid.Column="0" Width="{Binding ElementName=canvas_Page,Path=ActualWidth}" Maximum="{Binding ElementName=canvas_Page,Path=ActualWidth}" Visibility="Hidden"/>
-        <Slider x:Name="slider_Y" Grid.Row="1" Grid.Column="1" IsDirectionReversed="True" Orientation="Vertical" Height="{Binding ElementName=canvas_Page,Path=ActualHeight}" Maximum="{Binding ElementName=canvas_Page,Path=ActualHeight}" Visibility="Hidden"/>
+        <Slider x:Name="slider_X" Grid.Row="2" Grid.Column="0" Panel.ZIndex="1" Width="{Binding ElementName=canvas_Page,Path=ActualWidth}" Maximum="{Binding ElementName=canvas_Page,Path=ActualWidth}" Visibility="Hidden"/>
+        <Slider x:Name="slider_Y" Grid.Row="1" Grid.Column="1" Panel.ZIndex="1" IsDirectionReversed="True" Orientation="Vertical" Height="{Binding ElementName=canvas_Page,Path=ActualHeight}" Maximum="{Binding ElementName=canvas_Page,Path=ActualHeight}" Visibility="Hidden"/>
         <ToolBar Grid.Row="3" Grid.Column="0">
-            <ComboBox x:Name="comboBox_Pages" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Page" md:HintAssist.IsFloating="True" SelectionChanged="ComboBox_Pages_SelectionChanged" />
+            <ComboBox x:Name="comboBox_Pages" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Page" md:HintAssist.IsFloating="True" md:ComboBoxAssist.ShowSelectedItem="False" SelectionChanged="ComboBox_Pages_SelectionChanged" />
             <Separator/>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Add"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Add" Click="Button_AddPage_Click"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove all"/>
             <Separator/>
