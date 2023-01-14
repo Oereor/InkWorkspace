@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v7.0": {
       "Ink/1.0.0": {
         "dependencies": {
+          "ColorPickerDialog": "1.0.0",
+          "InkCodeEditor": "1.0.0",
           "MaterialDesignThemes": "4.7.0"
         },
         "runtime": {
@@ -41,6 +43,22 @@
             "fileVersion": "1.1.39.4716"
           }
         }
+      },
+      "ColorPickerDialog/1.0.0": {
+        "dependencies": {
+          "MaterialDesignThemes": "4.7.0"
+        },
+        "runtime": {
+          "ColorPickerDialog.dll": {}
+        }
+      },
+      "InkCodeEditor/1.0.0": {
+        "dependencies": {
+          "MaterialDesignThemes": "4.7.0"
+        },
+        "runtime": {
+          "InkCodeEditor.dll": {}
+        }
       }
     }
   },
@@ -70,6 +88,16 @@
       "sha512": "sha512-8PZKqw9QOcu42xk8puY4P1+EXHL9YGOR9b7qhaYx5cILHul456H073tj99vyPcCt0W0781T9RwHqkx507ZyUpQ==",
       "path": "microsoft.xaml.behaviors.wpf/1.1.39",
       "hashPath": "microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"
+    },
+    "ColorPickerDialog/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "InkCodeEditor/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

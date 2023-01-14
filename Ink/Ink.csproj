@@ -16,6 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ColorPickerDialog\ColorPickerDialog.csproj" />
+    <ProjectReference Include="..\InkCodeEditor\InkCodeEditor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="PowerInk.png" />
   </ItemGroup>
 

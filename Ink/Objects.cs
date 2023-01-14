@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ColorPickerDialog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace Ink
 {
@@ -285,11 +288,8 @@ namespace Ink
                 { "Lines", new InkProperty("Lines", InkPropertyValueType.List, "NoLine")
                 { ValueList = new string[] { "NoLine", "UnderLine", "OverLine", "Strikethrough" } } },
 
-                { "Foreground", new InkProperty("Foreground", InkPropertyValueType.List, "Black")
-                { ValueList = new string[] { "Black", "White", "Grey", "Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Customize" } } },
-
-                { "Background", new InkProperty("Background", InkPropertyValueType.List, "None")
-                { ValueList = new string[] { "None", "Black", "White", "Grey", "Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Customize" } } }
+                { "Foreground", new InkProperty("Foreground", InkPropertyValueType.Input, "000,000,000") },
+                { "Background", new InkProperty("Background", InkPropertyValueType.Input, "") }
             };
             foreach (InkProperty property in Properties.Values)
             {
@@ -404,8 +404,71 @@ namespace Ink
                 case "Lines":
                     SetLine(e.NewValue);
                     break;
+                case "Foreground":
+                    SetForeground(e.NewValue);
+                    break;
+                case "Background":
+                    SetBackground(e.NewValue);
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private void SetForeground(string foreground)
+        {
+            if (foreground == "")
+            {
+                textBlock.Foreground = new SolidColorBrush(Colors.Transparent);
+            }
+            else
+            {
+                textBlock.Foreground = new SolidColorBrush(ColourFromString(foreground));
+            }
+        }
+
+        private void SetBackground(string background)
+        {
+            if (background == "")
+            {
+                textBlock.Background = new SolidColorBrush(Colors.Transparent);
+            }
+            else
+            {
+                textBlock.Background = new SolidColorBrush(ColourFromString(background));
+            }
+        }
+
+        private Color ColourFromString(string rgb)
+        {
+            Regex regex = new(@"^\d{3},\d{3},\d{3}$");
+            if (regex.IsMatch(rgb))
+            {
+                if (byte.TryParse(rgb[..3], out byte r) && byte.TryParse(rgb[4..7], out byte g) && byte.TryParse(rgb[8..11], out byte b))
+                {
+                    return Color.FromRgb(r, g, b);
+                }
+                else
+                {
+                    return Colors.Transparent;
+                }
+            }
+            else
+            {
+                return Colors.Transparent;
+            }
+        }
+
+        private static Color GetCustomColour()
+        {
+            ColorDialog colorDialog = new((object sender, ColorRgbChangedEventArgs e) => { });
+            if (colorDialog.ShowDialog() == true)
+            {
+                return Color.FromRgb((byte)colorDialog.R, (byte)colorDialog.G, (byte)colorDialog.B);
+            }
+            else
+            {
+                return Colors.Transparent;  
             }
         }
 

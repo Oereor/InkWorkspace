@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ink", "Ink\Ink.csproj", "{CAC87F17-8482-46DC-9D04-7F692557F296}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InkCodeEditor", "InkCodeEditor\InkCodeEditor.csproj", "{EF37D151-D020-4335-8E59-99D60EDD6517}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InkCodeEditor", "InkCodeEditor\InkCodeEditor.csproj", "{EF37D151-D020-4335-8E59-99D60EDD6517}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPickerDialog", "ColorPickerDialog\ColorPickerDialog.csproj", "{C48E8DD5-542E-43BE-AA6F-3FFD23D3428F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EF37D151-D020-4335-8E59-99D60EDD6517}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF37D151-D020-4335-8E59-99D60EDD6517}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF37D151-D020-4335-8E59-99D60EDD6517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C48E8DD5-542E-43BE-AA6F-3FFD23D3428F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C48E8DD5-542E-43BE-AA6F-3FFD23D3428F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C48E8DD5-542E-43BE-AA6F-3FFD23D3428F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C48E8DD5-542E-43BE-AA6F-3FFD23D3428F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

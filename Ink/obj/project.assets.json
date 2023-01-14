@@ -50,6 +50,38 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WPF"
         ]
+      },
+      "ColorPickerDialog/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "MaterialDesignThemes": "4.7.0"
+        },
+        "compile": {
+          "bin/placeholder/ColorPickerDialog.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ColorPickerDialog.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
+      "InkCodeEditor/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "MaterialDesignThemes": "4.7.0"
+        },
+        "compile": {
+          "bin/placeholder/InkCodeEditor.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/InkCodeEditor.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
       }
     }
   },
@@ -143,10 +175,22 @@
         "microsoft.xaml.behaviors.wpf.nuspec",
         "tools/Install.ps1"
       ]
+    },
+    "ColorPickerDialog/1.0.0": {
+      "type": "project",
+      "path": "../ColorPickerDialog/ColorPickerDialog.csproj",
+      "msbuildProject": "../ColorPickerDialog/ColorPickerDialog.csproj"
+    },
+    "InkCodeEditor/1.0.0": {
+      "type": "project",
+      "path": "../InkCodeEditor/InkCodeEditor.csproj",
+      "msbuildProject": "../InkCodeEditor/InkCodeEditor.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
+      "ColorPickerDialog >= 1.0.0",
+      "InkCodeEditor >= 1.0.0",
       "MaterialDesignThemes >= 4.7.0"
     ]
   },
@@ -182,7 +226,14 @@
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\GitRepos\\InkWorkspace\\ColorPickerDialog\\ColorPickerDialog.csproj": {
+              "projectPath": "D:\\GitRepos\\InkWorkspace\\ColorPickerDialog\\ColorPickerDialog.csproj"
+            },
+            "D:\\GitRepos\\InkWorkspace\\InkCodeEditor\\InkCodeEditor.csproj": {
+              "projectPath": "D:\\GitRepos\\InkWorkspace\\InkCodeEditor\\InkCodeEditor.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

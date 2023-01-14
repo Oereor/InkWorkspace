@@ -26,25 +26,29 @@
                 <MenuItem Header="New" Click="MenuItem_File_New_Click"/>
                 <MenuItem Header="New window" Click="MenuItem_File_NewWindow_Click"/>
                 <Separator/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Save as"/>
+                <Separator/>
                 <MenuItem Header="Exit" Click="MenuItem_File_Exit_Click"/>
             </MenuItem>
             <MenuItem Header="Background">
                 <MenuItem Header="Background colour">
-                    <MenuItem Header="White"/>
-                    <MenuItem Header="Black"/>
-                    <MenuItem Header="Grey"/>
-                    <MenuItem Header="Red"/>
-                    <MenuItem Header="Orange"/>
-                    <MenuItem Header="Yellow"/>
-                    <MenuItem Header="Green"/>
-                    <MenuItem Header="Blue"/>
-                    <MenuItem Header="Purple"/>
+                    <MenuItem Header="White" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Black" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Grey" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Red" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Orange" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Yellow" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Green" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Blue" Click="MenuItems_BackgroundColour_Click"/>
+                    <MenuItem Header="Purple" Click="MenuItems_BackgroundColour_Click"/>
                     <Separator/>
                     <MenuItem Header="Customize"/>
                 </MenuItem>
                 <MenuItem Header="Background image"/>
                 <Separator/>
-                <MenuItem Header="Reset background"/>
+                <MenuItem Header="Reset background" Click="MenuItem_ResetBackgroundColour_Click" />
             </MenuItem>
             <MenuItem Header="Object">
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
@@ -63,6 +67,9 @@
                 <MenuItem Header="Open new code editor window"/>
                 <Separator/>
                 <MenuItem Header="Run submitted code"/>
+            </MenuItem>
+            <MenuItem Header="Colour">
+                <MenuItem Header="Visualize RGB" Click="MenuItem_VisualizeRGB_Click"/>
             </MenuItem>
         </Menu>
         <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0" Panel.ZIndex="-2" />

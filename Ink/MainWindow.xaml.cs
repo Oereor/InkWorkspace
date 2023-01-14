@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColorPickerDialog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -395,6 +396,55 @@ namespace Ink
         {
             new MainWindow().Show();
             this.Close();
+        }
+
+        private void MenuItems_BackgroundColour_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem menuItem_Colour)
+            {
+                switch (menuItem_Colour.Header)
+                {
+                    case "White":
+                        canvas_Page.Background = new SolidColorBrush(Colors.White);
+                        break;
+                    case "Black":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Black);
+                        break;
+                    case "Grey":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Gray);
+                        break;
+                    case "Red":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Red);
+                        break;
+                    case "Orange":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Orange);
+                        break;
+                    case "Yellow":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Yellow);
+                        break;
+                    case "Green":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Green);
+                        break;
+                    case "Blue":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Blue);
+                        break;
+                    case "Purple":
+                        canvas_Page.Background = new SolidColorBrush(Colors.Purple);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void MenuItem_ResetBackgroundColour_Click(object sender, RoutedEventArgs e)
+        {
+            canvas_Page.Background = new SolidColorBrush(Colors.White);
+        }
+
+        private void MenuItem_VisualizeRGB_Click(object sender, RoutedEventArgs e)
+        {
+            new ColorDialog((object sender, ColorRgbChangedEventArgs e) => { }).Show();
         }
     }
 

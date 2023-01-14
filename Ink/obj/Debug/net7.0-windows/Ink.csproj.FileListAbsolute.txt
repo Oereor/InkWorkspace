@@ -50,3 +50,13 @@ D:\GitRepos\InkWorkspace\Ink\obj\Debug\net7.0-windows\refint\Ink.dll
 D:\GitRepos\InkWorkspace\Ink\obj\Debug\net7.0-windows\Ink.pdb
 D:\GitRepos\InkWorkspace\Ink\obj\Debug\net7.0-windows\Ink.genruntimeconfig.cache
 D:\GitRepos\InkWorkspace\Ink\obj\Debug\net7.0-windows\ref\Ink.dll
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\ColorPickerDialog.deps.json
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\ColorPickerDialog.runtimeconfig.json
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\ColorPickerDialog.exe
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\InkCodeEditor.deps.json
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\InkCodeEditor.runtimeconfig.json
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\InkCodeEditor.exe
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\ColorPickerDialog.dll
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\InkCodeEditor.dll
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\ColorPickerDialog.pdb
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\InkCodeEditor.pdb
