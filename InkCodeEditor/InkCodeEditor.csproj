@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Jint" Version="2.11.58" />
     <PackageReference Include="MaterialDesignThemes" Version="4.7.0" />
   </ItemGroup>
 
