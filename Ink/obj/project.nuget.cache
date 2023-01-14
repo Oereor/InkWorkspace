@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "VMWDFpaxXsHYe5AxMkXPFeuqDKisqOZ87NIVcuP0dkpaC/pyzOi63eQvreFYNR2THFZ4xRFUiw0yUD4Q4Mkqkg==",
+  "dgSpecHash": "brlum/wUJ1r4rErqrLK2JrwONvo+uoK2ndzmPhHE504vv+ld5/7HebAqVmfSxuTo4QtwpbXEPJt31fWNH+4s0g==",
   "success": true,
   "projectFilePath": "D:\\GitRepos\\InkWorkspace\\Ink\\Ink.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\lenovo\\.nuget\\packages\\jint\\2.11.58\\jint.2.11.58.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\materialdesigncolors\\2.1.0\\materialdesigncolors.2.1.0.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\materialdesignthemes\\4.7.0\\materialdesignthemes.4.7.0.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"

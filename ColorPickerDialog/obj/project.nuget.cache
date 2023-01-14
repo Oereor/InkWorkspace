@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ktzWvLbip7phSQNVuYo56QSO9ROLBx6pJgag6arbbsWATnZ88cOK4tmraiZaKJK+KW7ic8V8ohfVH4/iNv8ecQ==",
+  "dgSpecHash": "Mg/dFdf70N22jIXSy9N6RRJdslu+Yh//gjCON/7uDY/oxhoutYdqtlS7YuTkWFmRM5eOAl8F9wHc4hCN0VKFKw==",
   "success": true,
   "projectFilePath": "D:\\GitRepos\\InkWorkspace\\ColorPickerDialog\\ColorPickerDialog.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\lenovo\\.nuget\\packages\\jint\\2.11.58\\jint.2.11.58.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\materialdesigncolors\\2.1.0\\materialdesigncolors.2.1.0.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\materialdesignthemes\\4.7.0\\materialdesignthemes.4.7.0.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"

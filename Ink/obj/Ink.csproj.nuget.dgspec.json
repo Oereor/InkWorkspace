@@ -45,6 +45,10 @@
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[2.11.58, )"
+            },
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[4.7.0, )"
@@ -114,6 +118,10 @@
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[2.11.58, )"
+            },
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[4.7.0, )"
@@ -190,6 +198,10 @@
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[2.11.58, )"
+            },
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[4.7.0, )"

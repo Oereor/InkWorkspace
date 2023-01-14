@@ -88,7 +88,7 @@ namespace ColorPickerDialog {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ColorPickerDialog;component/colordialog.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ColorPickerDialog;V1.0.0.0;component/colordialog.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\ColorDialog.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

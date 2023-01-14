@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net7.0-windows7.0": {
+      "Jint/2.11.58": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Jint.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Jint.dll": {}
+        }
+      },
       "MaterialDesignColors/2.1.0": {
         "type": "package",
         "compile": {
@@ -54,6 +63,22 @@
     }
   },
   "libraries": {
+    "Jint/2.11.58": {
+      "sha512": "obRlPnuSmbjO7I2bfuKc1d+K1LB3xyg1Cnm2MT7PGUOHOntcdR96pDhsQnWBI5Dhxqr1Bj5/odpNi/B+AwVlPA==",
+      "type": "package",
+      "path": "jint/2.11.58",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jint.2.11.58.nupkg.sha512",
+        "jint.nuspec",
+        "lib/net40/Jint.dll",
+        "lib/net45/Jint.dll",
+        "lib/net451/Jint.dll",
+        "lib/netstandard1.3/Jint.dll",
+        "lib/netstandard2.0/Jint.dll"
+      ]
+    },
     "MaterialDesignColors/2.1.0": {
       "sha512": "cK+ovgmFeWcXUKZizjlpwgvTiHPmoiWS7EsXlHPJPwPhl/lXozY9RiNUPaUMTDGG/GR61eohnSCcTnETSwATRA==",
       "type": "package",
@@ -147,6 +172,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
+      "Jint >= 2.11.58",
       "MaterialDesignThemes >= 4.7.0"
     ]
   },
@@ -195,6 +221,10 @@
       "net7.0-windows7.0": {
         "targetAlias": "net7.0-windows",
         "dependencies": {
+          "Jint": {
+            "target": "Package",
+            "version": "[2.11.58, )"
+          },
           "MaterialDesignThemes": {
             "target": "Package",
             "version": "[4.7.0, )"
