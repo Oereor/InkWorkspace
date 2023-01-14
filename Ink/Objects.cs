@@ -417,7 +417,7 @@ namespace Ink
 
         private void SetForeground(string foreground)
         {
-            if (foreground == "")
+            if (foreground == "" || foreground is null)
             {
                 textBlock.Foreground = new SolidColorBrush(Colors.Transparent);
             }
@@ -429,7 +429,7 @@ namespace Ink
 
         private void SetBackground(string background)
         {
-            if (background == "")
+            if (background == "" || background is null)
             {
                 textBlock.Background = new SolidColorBrush(Colors.Transparent);
             }
@@ -442,7 +442,7 @@ namespace Ink
         private Color ColourFromString(string rgb)
         {
             Regex regex = new(@"^\d{3},\d{3},\d{3}$");
-            if (regex.IsMatch(rgb))
+            if (rgb is not null && regex.IsMatch(rgb))
             {
                 if (byte.TryParse(rgb[..3], out byte r) && byte.TryParse(rgb[4..7], out byte g) && byte.TryParse(rgb[8..11], out byte b))
                 {

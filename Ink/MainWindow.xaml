@@ -90,7 +90,7 @@
             <GroupBox x:Name="groupBox_Properties" Header="PROPERTIES" Canvas.Top="385" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Height="230" Visibility="Hidden">
                 <ListBox x:Name="list_Properties" MaxHeight="{Binding ElementName=groupBox_Properties,Path=ActualHeight}" SelectionChanged="List_Properties_SelectionChanged"/>
             </GroupBox>
-            <TextBox x:Name="textBox_PropertyValue" Style="{StaticResource MaterialDesignOutlinedTextBox}" md:HintAssist.Hint="Property Value" md:HintAssist.IsFloating="True"  Canvas.Top="625" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden" AcceptsReturn="True" MaxHeight="140"/>
+            <TextBox x:Name="textBox_PropertyValue" Style="{StaticResource MaterialDesignOutlinedTextBox}" md:HintAssist.Hint="Property Value" md:HintAssist.IsFloating="True" md:TextFieldAssist.HasClearButton="True" Canvas.Top="625" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden" AcceptsReturn="True" MaxHeight="140"/>
             <ComboBox x:Name="comboBox_PropertyValue" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Property Value" md:HintAssist.IsFloating="True"  Canvas.Top="625" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Visibility="Hidden" SelectionChanged="ComboBox_PropertyValue_SelectionChanged"/>
             <CheckBox x:Name="checkBox_PropertyValue" Canvas.Top="625" Content="Property Value" Visibility="Hidden"/>
         </Canvas>
