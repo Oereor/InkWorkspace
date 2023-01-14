@@ -71,7 +71,7 @@ namespace Ink
             set
             {
                 valueSourceObject = value;
-                PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(ValueSourceObject)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ValueSourceObject)));
             }
         }
         public InkPropertyValueType ValueType { get; }
@@ -131,7 +131,7 @@ namespace Ink
             {
                 ValueSource.InkPropertyValueChanged -= Property_InkPropertyValueChanged;
                 ValueSource = null;
-                ValueSourceObject= null;
+                ValueSourceObject = null;
                 ValueSyncEnabled = false;
             }
         }
@@ -294,24 +294,28 @@ namespace Ink
             foreach (InkProperty property in Properties.Values)
             {
                 property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 以便在Property更新时同时更新前端的显示
-                property.Value = property.DefaultValue; 
+                property.Value = property.DefaultValue;
             }
             X = 514;
             Y = 114;
             BindTextBoxWithTextBlock();
+            textBlock.MouseDown += TextBlock_MouseDown;
+            textBox.LostFocus += TextBox_LostFocus;
         }
+
+        private bool IsTextBoxShown { get; set; } = false;
 
         public override string Type => "TYPE: TEXT BOX";
 
         public override Dictionary<string, InkProperty> Properties { get; }
 
-        protected override FrameworkElement ShownElement => textBlock;
+        protected override FrameworkElement ShownElement => IsTextBoxShown ? textBox : textBlock;
 
         public override void AddToPage(Canvas page)
         {
             page.Children.Add(textBlock);
             page.Children.Add(textBox);
-            textBox.Visibility = Visibility.Hidden; 
+            textBox.Visibility = Visibility.Hidden;
         }
 
         private static string[] GetInstalledFonts()
@@ -325,6 +329,29 @@ namespace Ink
                 i++;
             }
             return fonts;
+        }
+
+        /* 当TextBlock被点击时切换到TextBox */
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (textBlock.IsVisible)
+            {
+                textBlock.Visibility = Visibility.Hidden;
+                textBox.Visibility = Visibility.Visible;
+                IsTextBoxShown = true;
+                textBox.Focus();
+            }
+        }
+
+        /* TextBox失去焦点时切回TextBlock */
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBox.IsVisible)
+            {
+                textBox.Visibility = Visibility.Hidden;
+                textBlock.Visibility = Visibility.Visible;
+                IsTextBoxShown = false;
+            }
         }
 
         /* 响应后台属性值的更改 */
@@ -428,11 +455,12 @@ namespace Ink
 
         private void BindTextBoxWithTextBlock()
         {
-            Binding binding = new Binding
+            Binding binding = new()
             {
                 Source = textBlock,
                 Mode = BindingMode.TwoWay,
-                Path = new PropertyPath("Text")
+                Path = new PropertyPath("Text"),
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
             textBox.SetBinding(TextBox.TextProperty, binding);
             binding = new Binding
@@ -481,6 +509,13 @@ namespace Ink
             {
                 Source = textBlock,
                 Mode = BindingMode.TwoWay,
+                Path = new PropertyPath("TextDecorations")
+            };
+            textBox.SetBinding(TextBox.TextDecorationsProperty, binding);
+            binding = new Binding
+            {
+                Source = textBlock,
+                Mode = BindingMode.TwoWay,
                 Path = new PropertyPath("Foreground")
             };
             textBox.SetBinding(TextBox.ForegroundProperty, binding);
@@ -491,6 +526,27 @@ namespace Ink
                 Path = new PropertyPath("Background")
             };
             textBox.SetBinding(TextBox.BackgroundProperty, binding);
+            binding = new Binding
+            {
+                Source = textBlock,
+                Mode = BindingMode.TwoWay,
+                Path = new PropertyPath("Margin")
+            };
+            textBox.SetBinding(TextBox.MarginProperty, binding);
+            binding = new Binding
+            {
+                Source = textBlock,
+                Mode = BindingMode.TwoWay,
+                Path = new PropertyPath("Width")
+            };
+            textBox.SetBinding(TextBox.WidthProperty, binding);
+            binding = new Binding
+            {
+                Source = textBlock,
+                Mode = BindingMode.TwoWay,
+                Path = new PropertyPath("Height")
+            };
+            textBox.SetBinding(TextBox.HeightProperty, binding);
         }
     }
 }
