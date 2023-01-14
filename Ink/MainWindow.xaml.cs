@@ -227,6 +227,7 @@ namespace Ink
 
         private void CheckBox_SyncProperty_Click(object sender, RoutedEventArgs e)
         {
+            SetComboBox_SyncPropertyWithObject_ItemsSource();
             if (checkBox_SyncProperty.IsChecked == true)
             {
                 if (comboBox_SyncPropertyWithObject.SelectedItem is InkObject selectedSyncObject)
@@ -257,6 +258,19 @@ namespace Ink
             }
         }
 
+        private void ComboBox_SyncPropertyWithObject_DropDownClosed(object sender, EventArgs e)
+        {
+            //if (comboBox_SyncPropertyWithObject.SelectedItem is InkObject selectedSyncObject
+            //    && list_Properties.SelectedItem is InkProperty selectedProperty)
+            //{
+            //    if (selectedProperty.ValueSourceObject is not null 
+            //        && (!selectedProperty.ValueSourceObject.Equals(selectedSyncObject)))
+            //    {
+            //        checkBox_SyncProperty.IsChecked = false;
+            //    }
+            //}
+        }
+
         private void ComboBox_SyncPropertyWithObject_DropDownOpened(object sender, EventArgs e)
         {
             SetComboBox_SyncPropertyWithObject_ItemsSource();
@@ -284,11 +298,13 @@ namespace Ink
         private void CheckBox_SyncProperty_Checked(object sender, RoutedEventArgs e)
         {
             SetValueEditState(false);
+            comboBox_SyncPropertyWithObject.IsEnabled= false;
         }
 
         private void CheckBox_SyncProperty_Unchecked(object sender, RoutedEventArgs e)
         {
             SetValueEditState(true);
+            comboBox_SyncPropertyWithObject.IsEnabled = true;
         }
 
         private void SetValueEditState(bool enabled)
@@ -336,6 +352,23 @@ namespace Ink
         {
             pages.Add(new InkPage($"Page{pageCounter++}"));
             comboBox_Pages.SelectedIndex = comboBox_Pages.Items.Count - 1;
+        }
+
+        private void ComboBox_SyncPropertyWithObject_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //SetComboBox_SyncPropertyWithObject_ItemsSource();
+            //if (checkBox_SyncProperty.IsChecked == true)
+            //{
+            //    if (comboBox_SyncPropertyWithObject.SelectedItem is InkObject selectedSyncObject)
+            //    {
+            //        if (list_Properties.SelectedItem is InkProperty selectedProperty)
+            //        {
+            //            selectedProperty.DisableValueSynchronization();
+            //            selectedProperty.SyncValueWith(selectedSyncObject.Properties[selectedProperty.Name], selectedSyncObject);
+            //            SetValueEditState(false);
+            //        }
+            //    }
+            //}
         }
     }
 

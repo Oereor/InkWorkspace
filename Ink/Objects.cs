@@ -354,7 +354,7 @@ namespace Ink
         /* TextBox失去焦点时切回TextBlock */
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsVisible)
+            if (Visible)
             {
                 textBox.Visibility = Visibility.Hidden;
                 textBlock.Visibility = Visibility.Visible;
