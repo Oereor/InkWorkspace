@@ -259,7 +259,7 @@ namespace Ink
 
     public class InkTextBox : InkObject
     {
-        private TextBox textBox = new();    // 在InkTextBox获得焦点时显示以直接编辑文本
+        private TextBox textBox = new() { AcceptsReturn = true };    // 在InkTextBox获得焦点时显示以直接编辑文本
         private TextBlock textBlock = new();    // 无焦点时显示
 
         public InkTextBox(string name) : base(name)
@@ -301,6 +301,14 @@ namespace Ink
             BindTextBoxWithTextBlock();
             textBlock.MouseDown += TextBlock_MouseDown;
             textBox.LostFocus += TextBox_LostFocus;
+            Binding binding = new()
+            {
+                Source = Properties["Text"],
+                Mode = BindingMode.TwoWay,
+                Path = new PropertyPath("Value"),
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            textBox.SetBinding(TextBox.TextProperty, binding);
         }
 
         private bool IsTextBoxShown { get; set; } = false;
@@ -334,7 +342,7 @@ namespace Ink
         /* 当TextBlock被点击时切换到TextBox */
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (textBlock.IsVisible)
+            if (textBlock.IsVisible && !Properties["Text"].ValueSyncEnabled)
             {
                 textBlock.Visibility = Visibility.Hidden;
                 textBox.Visibility = Visibility.Visible;
@@ -350,8 +358,13 @@ namespace Ink
             {
                 textBox.Visibility = Visibility.Hidden;
                 textBlock.Visibility = Visibility.Visible;
-                IsTextBoxShown = false;
             }
+            else
+            {
+                textBox.Visibility = Visibility.Hidden;
+                textBlock.Visibility = Visibility.Hidden;
+            }
+            IsTextBoxShown = false;
         }
 
         /* 响应后台属性值的更改 */
