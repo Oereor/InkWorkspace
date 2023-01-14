@@ -93,8 +93,8 @@
             <ComboBox x:Name="comboBox_Pages" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Page" md:HintAssist.IsFloating="True" md:ComboBoxAssist.ShowSelectedItem="False" SelectionChanged="ComboBox_Pages_SelectionChanged" />
             <Separator/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Add" Click="Button_AddPage_Click"/>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove"/>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove all"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove" Click="Button_RemovePage_Click"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove all" Click="Button_RemoveAllPages_Click"/>
             <Separator/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Rename"/>
         </ToolBar>

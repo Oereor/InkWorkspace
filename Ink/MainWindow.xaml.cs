@@ -33,17 +33,20 @@ namespace Ink
 
         private void ComboBox_Pages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            currentPage = pages[comboBox_Pages.SelectedIndex];
-            canvas_Page.Children.Clear();
-            /* 将选中Page的所有Object添加到显示区，并选中第一个Object（如果有） */
-            foreach (InkObject element in currentPage.Objects)
+            if (comboBox_Pages.SelectedIndex >= 0)
             {
-                element.AddToPage(canvas_Page);
-            }
-            comboBox_Objects.ItemsSource = currentPage.Objects;
-            if (comboBox_Objects.Items.Count > 0)
-            {
-                comboBox_Objects.SelectedIndex = 0;
+                currentPage = pages[comboBox_Pages.SelectedIndex];
+                canvas_Page.Children.Clear();
+                /* 将选中Page的所有Object添加到显示区，并选中第一个Object（如果有） */
+                foreach (InkObject element in currentPage.Objects)
+                {
+                    element.AddToPage(canvas_Page);
+                }
+                comboBox_Objects.ItemsSource = currentPage.Objects;
+                if (comboBox_Objects.Items.Count > 0)
+                {
+                    comboBox_Objects.SelectedIndex = 0;
+                }
             }
         }
 
@@ -298,7 +301,7 @@ namespace Ink
         private void CheckBox_SyncProperty_Checked(object sender, RoutedEventArgs e)
         {
             SetValueEditState(false);
-            comboBox_SyncPropertyWithObject.IsEnabled= false;
+            comboBox_SyncPropertyWithObject.IsEnabled = false;
         }
 
         private void CheckBox_SyncProperty_Unchecked(object sender, RoutedEventArgs e)
@@ -369,6 +372,29 @@ namespace Ink
             //        }
             //    }
             //}
+        }
+
+        private void Button_RemovePage_Click(object sender, RoutedEventArgs e)
+        {
+            if (pages.Count > 1)
+            {
+                int currentPageIndex = pages.IndexOf(currentPage);
+                pages.Remove(currentPage);
+                if (currentPageIndex > 0)
+                {
+                    comboBox_Pages.SelectedIndex = currentPageIndex - 1;
+                }
+                else if (currentPageIndex == 0)
+                {
+                    comboBox_Pages.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void Button_RemoveAllPages_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 
