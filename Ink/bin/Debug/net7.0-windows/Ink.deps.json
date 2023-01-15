@@ -10,10 +10,19 @@
         "dependencies": {
           "ColorPickerDialog": "1.0.0",
           "InkCodeEditor": "1.0.0",
+          "Jint": "2.11.58",
           "MaterialDesignThemes": "4.7.0"
         },
         "runtime": {
           "Ink.dll": {}
+        }
+      },
+      "Jint/2.11.58": {
+        "runtime": {
+          "lib/netstandard2.0/Jint.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "2.11.58.0"
+          }
         }
       },
       "MaterialDesignColors/2.1.0": {
@@ -46,6 +55,7 @@
       },
       "ColorPickerDialog/1.0.0": {
         "dependencies": {
+          "Jint": "2.11.58",
           "MaterialDesignThemes": "4.7.0"
         },
         "runtime": {
@@ -54,6 +64,7 @@
       },
       "InkCodeEditor/1.0.0": {
         "dependencies": {
+          "Jint": "2.11.58",
           "MaterialDesignThemes": "4.7.0"
         },
         "runtime": {
@@ -67,6 +78,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Jint/2.11.58": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-obRlPnuSmbjO7I2bfuKc1d+K1LB3xyg1Cnm2MT7PGUOHOntcdR96pDhsQnWBI5Dhxqr1Bj5/odpNi/B+AwVlPA==",
+      "path": "jint/2.11.58",
+      "hashPath": "jint.2.11.58.nupkg.sha512"
     },
     "MaterialDesignColors/2.1.0": {
       "type": "package",

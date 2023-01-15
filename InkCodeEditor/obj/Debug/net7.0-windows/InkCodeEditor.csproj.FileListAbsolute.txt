@@ -24,3 +24,4 @@ D:\GitRepos\InkWorkspace\InkCodeEditor\obj\Debug\net7.0-windows\refint\InkCodeEd
 D:\GitRepos\InkWorkspace\InkCodeEditor\obj\Debug\net7.0-windows\InkCodeEditor.pdb
 D:\GitRepos\InkWorkspace\InkCodeEditor\obj\Debug\net7.0-windows\InkCodeEditor.genruntimeconfig.cache
 D:\GitRepos\InkWorkspace\InkCodeEditor\obj\Debug\net7.0-windows\ref\InkCodeEditor.dll
+D:\GitRepos\InkWorkspace\InkCodeEditor\bin\Debug\net7.0-windows\Jint.dll

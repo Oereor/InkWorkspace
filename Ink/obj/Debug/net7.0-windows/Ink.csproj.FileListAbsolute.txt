@@ -60,3 +60,4 @@ D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\ColorPickerDialog.dll
 D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\InkCodeEditor.dll
 D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\ColorPickerDialog.pdb
 D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\InkCodeEditor.pdb
+D:\GitRepos\InkWorkspace\Ink\bin\Debug\net7.0-windows\Jint.dll

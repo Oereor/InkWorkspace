@@ -24,3 +24,4 @@ D:\GitRepos\InkWorkspace\ColorPickerDialog\obj\Debug\net7.0-windows\refint\Color
 D:\GitRepos\InkWorkspace\ColorPickerDialog\obj\Debug\net7.0-windows\ColorPickerDialog.pdb
 D:\GitRepos\InkWorkspace\ColorPickerDialog\obj\Debug\net7.0-windows\ColorPickerDialog.genruntimeconfig.cache
 D:\GitRepos\InkWorkspace\ColorPickerDialog\obj\Debug\net7.0-windows\ref\ColorPickerDialog.dll
+D:\GitRepos\InkWorkspace\ColorPickerDialog\bin\Debug\net7.0-windows\Jint.dll
