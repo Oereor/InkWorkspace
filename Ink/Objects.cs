@@ -251,6 +251,7 @@ namespace Ink
             }
         }
         public ObservableCollection<InkObject> Objects { get; } // 包含页面上所有InkObject，Page的主体
+        public Color Background { get; set; } = Colors.White;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -46,7 +46,6 @@
                     <Separator/>
                     <MenuItem Header="Customize"/>
                 </MenuItem>
-                <MenuItem Header="Background image"/>
                 <Separator/>
                 <MenuItem Header="Reset background" Click="MenuItem_ResetBackgroundColour_Click" />
             </MenuItem>

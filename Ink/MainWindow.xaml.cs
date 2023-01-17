@@ -48,6 +48,7 @@ namespace Ink
                 {
                     comboBox_Objects.SelectedIndex = 0;
                 }
+                canvas_Page.Background = new SolidColorBrush(currentPage.Background);
             }
         }
 
@@ -402,44 +403,34 @@ namespace Ink
         {
             if (sender is MenuItem menuItem_Colour)
             {
-                switch (menuItem_Colour.Header)
+                Color background = menuItem_Colour.Header switch
                 {
-                    case "White":
-                        canvas_Page.Background = new SolidColorBrush(Colors.White);
-                        break;
-                    case "Black":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Black);
-                        break;
-                    case "Grey":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Gray);
-                        break;
-                    case "Red":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Red);
-                        break;
-                    case "Orange":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Orange);
-                        break;
-                    case "Yellow":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Yellow);
-                        break;
-                    case "Green":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Green);
-                        break;
-                    case "Blue":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Blue);
-                        break;
-                    case "Purple":
-                        canvas_Page.Background = new SolidColorBrush(Colors.Purple);
-                        break;
-                    default:
-                        break;
-                }
+                    "White" => Colors.White,
+                    "Black" => Colors.Black,
+                    "Grey" => Colors.Gray,
+                    "Red" => Colors.Red,
+                    "Orange" => Colors.Orange,
+                    "Yellow" => Colors.Yellow,
+                    "Green" => Colors.Green,
+                    "Blue" => Colors.Blue,
+                    "Purple" => Colors.Purple,
+                    _ => Colors.Transparent,
+                };
+                canvas_Page.Background=new SolidColorBrush(background);
+                if (currentPage is not null)
+                {
+                    currentPage.Background = background;
+                }                
             }
         }
 
         private void MenuItem_ResetBackgroundColour_Click(object sender, RoutedEventArgs e)
         {
             canvas_Page.Background = new SolidColorBrush(Colors.White);
+            if (currentPage is not null)
+            {
+                currentPage.Background = Colors.White;
+            }
         }
 
         private void MenuItem_VisualizeRGB_Click(object sender, RoutedEventArgs e)
