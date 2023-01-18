@@ -214,6 +214,7 @@ namespace Ink
         protected abstract FrameworkElement ShownElement { get; }   // 实际显示出来的控件
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event MouseButtonEventHandler? Click;    // 控件被点击时触发，通常用于通知前端获取焦点
 
         protected InkObject(string name)
         {
@@ -228,6 +229,16 @@ namespace Ink
         public virtual void AddToPage(Canvas page)
         {
             page.Children.Add(ShownElement);
+        }
+
+        public void RemoveFromPage(Canvas page)
+        {
+            page.Children.Remove(ShownElement);
+        }
+
+        protected void RaiseClickEvent(object sender, MouseButtonEventArgs e)
+        {
+            Click?.Invoke(sender, e);
         }
     }
 
@@ -302,6 +313,7 @@ namespace Ink
             BindTextBoxWithTextBlock();
             textBlock.MouseDown += TextBlock_MouseDown;
             textBox.LostFocus += TextBox_LostFocus;
+            textBox.MouseDown += (sender, e) => RaiseClickEvent(this, e);
             Binding binding = new()
             {
                 Source = Properties["Text"],
@@ -350,21 +362,14 @@ namespace Ink
                 IsTextBoxShown = true;
                 textBox.Focus();
             }
+            RaiseClickEvent(this, e);
         }
 
         /* TextBox失去焦点时切回TextBlock */
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (Visible)
-            {
-                textBox.Visibility = Visibility.Hidden;
-                textBlock.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                textBox.Visibility = Visibility.Hidden;
-                textBlock.Visibility = Visibility.Hidden;
-            }
+            textBlock.Visibility = Visibility.Visible;
+            textBox.Visibility = Visibility.Hidden;
             IsTextBoxShown = false;
         }
 
@@ -462,14 +467,14 @@ namespace Ink
 
         private static Color GetCustomColour()
         {
-            ColorDialog colorDialog = new((object sender, ColorRgbChangedEventArgs e) => { });
+            ColorDialog colorDialog = new(true);
             if (colorDialog.ShowDialog() == true)
             {
                 return Color.FromRgb((byte)colorDialog.R, (byte)colorDialog.G, (byte)colorDialog.B);
             }
             else
             {
-                return Colors.Transparent;  
+                return Colors.Transparent;
             }
         }
 

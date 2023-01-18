@@ -38,6 +38,8 @@ namespace Ink
             {
                 currentPage = pages[comboBox_Pages.SelectedIndex];
                 canvas_Page.Children.Clear();
+                canvas_Page.Children.Add(gridSplitter_Horizontal);
+                canvas_Page.Children.Add(gridSplitter_Vertical);
                 /* 将选中Page的所有Object添加到显示区，并选中第一个Object（如果有） */
                 foreach (InkObject element in currentPage.Objects)
                 {
@@ -120,12 +122,21 @@ namespace Ink
             else
             {
                 currentObject = null;
+                textBox_Name.Text = string.Empty;
+                groupBox_Type.Header = "TYPE: ";
+                textBox_X.Text = string.Empty;
+                textBox_Y.Text = string.Empty;
+                textBox_Width.Text = string.Empty;
+                textBox_Height.Text = string.Empty;
                 checkBox_Visible.IsEnabled = false;
                 slider_X.Visibility = Visibility.Hidden;
                 slider_Y.Visibility = Visibility.Hidden;
                 checkBox_SyncProperty.Visibility = Visibility.Hidden;
                 comboBox_SyncPropertyWithObject.Visibility = Visibility.Hidden;
                 groupBox_Properties.Visibility = Visibility.Hidden;
+                textBox_PropertyValue.Visibility = Visibility.Hidden;
+                comboBox_PropertyValue.Visibility = Visibility.Hidden;
+                checkBox_PropertyValue.Visibility = Visibility.Hidden;
             }
         }
 
@@ -135,6 +146,21 @@ namespace Ink
             currentPage.Objects.Add(inkTextBox);
             inkTextBox.AddToPage(canvas_Page);
             comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+            inkTextBox.Click += InkObject_Click;
+        }
+
+        private void InkObject_Click(object sender, MouseButtonEventArgs e)
+        {
+            // 如果：
+            // 1. 未选中任何Object；或
+            // 2. 选中的Object不是被点击的
+            if (sender is InkObject inkObject && (currentObject is null || !currentObject.Equals(inkObject)))
+            {
+                if (currentPage is not null && comboBox_Objects.Items.Contains(inkObject))
+                {
+                    comboBox_Objects.SelectedItem = inkObject;
+                }
+            }
         }
 
         private void ComboBox_Objects_DropDownOpened(object sender, EventArgs e)
@@ -416,11 +442,11 @@ namespace Ink
                     "Purple" => Colors.Purple,
                     _ => Colors.Transparent,
                 };
-                canvas_Page.Background=new SolidColorBrush(background);
+                canvas_Page.Background = new SolidColorBrush(background);
                 if (currentPage is not null)
                 {
                     currentPage.Background = background;
-                }                
+                }
             }
         }
 
@@ -435,7 +461,25 @@ namespace Ink
 
         private void MenuItem_VisualizeRGB_Click(object sender, RoutedEventArgs e)
         {
-            new ColorDialog((object sender, ColorRgbChangedEventArgs e) => { }).Show();
+            new ColorDialog(false).Show();
+        }
+
+        private void MenuItem_Guides_Checked(object sender, RoutedEventArgs e)
+        {
+            if (gridSplitter_Horizontal is not null && gridSplitter_Vertical is not null)
+            {
+                gridSplitter_Horizontal.Visibility = Visibility.Visible;
+                gridSplitter_Vertical.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void MenuItem_Guides_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (gridSplitter_Horizontal is not null && gridSplitter_Vertical is not null)
+            {
+                gridSplitter_Horizontal.Visibility = Visibility.Hidden;
+                gridSplitter_Vertical.Visibility = Visibility.Hidden;
+            }
         }
     }
 

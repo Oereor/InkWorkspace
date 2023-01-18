@@ -32,8 +32,8 @@
                 <Separator/>
                 <MenuItem Header="Exit" Click="MenuItem_File_Exit_Click"/>
             </MenuItem>
-            <MenuItem Header="Background">
-                <MenuItem Header="Background colour">
+            <MenuItem Header="Page">
+                <MenuItem Header="Background">
                     <MenuItem Header="White" Click="MenuItems_BackgroundColour_Click"/>
                     <MenuItem Header="Black" Click="MenuItems_BackgroundColour_Click"/>
                     <MenuItem Header="Grey" Click="MenuItems_BackgroundColour_Click"/>
@@ -45,9 +45,10 @@
                     <MenuItem Header="Purple" Click="MenuItems_BackgroundColour_Click"/>
                     <Separator/>
                     <MenuItem Header="Customize"/>
+                    <Separator/>
+                    <MenuItem Header="Reset background" Click="MenuItem_ResetBackgroundColour_Click" />
                 </MenuItem>
-                <Separator/>
-                <MenuItem Header="Reset background" Click="MenuItem_ResetBackgroundColour_Click" />
+                <MenuItem Header="Show guides" IsCheckable="True" IsChecked="True" Checked="MenuItem_Guides_Checked" Unchecked="MenuItem_Guides_Unchecked"/>
             </MenuItem>
             <MenuItem Header="Object">
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
@@ -71,7 +72,10 @@
                 <MenuItem Header="Visualize RGB" Click="MenuItem_VisualizeRGB_Click"/>
             </MenuItem>
         </Menu>
-        <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0" Panel.ZIndex="-2" />
+        <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0" Panel.ZIndex="-2" >
+            <GridSplitter x:Name="gridSplitter_Horizontal" IsEnabled="False" Width="{Binding ElementName=canvas_Page,Path=ActualWidth}" Height="2" Canvas.Top="{Binding ElementName=slider_Y,Path=Value}" Visibility="Visible" Opacity="1"/>
+            <GridSplitter x:Name="gridSplitter_Vertical" IsEnabled="False" Width="2" Height="{Binding ElementName=canvas_Page,Path=ActualHeight}" Canvas.Left="{Binding ElementName=slider_X,Path=Value}" Visibility="Visible" Opacity="1"/>
+        </Canvas>
         <Canvas x:Name="canvas_PropertiesPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3" Panel.ZIndex="0">
             <ComboBox x:Name="comboBox_Objects" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:ComboBoxAssist.ShowSelectedItem="False" md:HintAssist.Hint="Object" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Canvas.Top="5" SelectionChanged="ComboBox_Objects_SelectionChanged" DropDownOpened="ComboBox_Objects_DropDownOpened"/>
             <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update of name takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="51" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>

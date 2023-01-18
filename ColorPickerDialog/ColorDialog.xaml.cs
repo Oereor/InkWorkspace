@@ -41,10 +41,21 @@ namespace ColorPickerDialog
             set => SetValue(BProperty, value);
         }
 
-        public ColorDialog(ColorRgbChangedEventHandler onColourRgbChanged)
+        public ColorDialog(bool isPicker)
         {
             InitializeComponent();
-            ColorRgbChanged += onColourRgbChanged;
+            if (isPicker)
+            {
+                button_Ok.Visibility = Visibility.Visible;
+                button_Cancel.Visibility = Visibility.Visible;
+                button_GenerateRgbString.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                button_Ok.Visibility = Visibility.Hidden;
+                button_Cancel.Visibility = Visibility.Hidden;
+                button_GenerateRgbString.Visibility = Visibility.Visible;
+            }
             txtR.Text = "255";
             txtG.Text = "255";
             txtB.Text = "255";
@@ -72,13 +83,13 @@ namespace ColorPickerDialog
             ColourPreview.Background = new SolidColorBrush(Colors.White);
         }
 
-        public event ColorRgbChangedEventHandler ColorRgbChanged;
+        public event ColorRgbChangedEventHandler? ColorRgbChanged;
 
         private void Texts_TextChanged(object sender, TextChangedEventArgs e) => ColourPreview.Background = new SolidColorBrush(Color.FromRgb((byte)R, (byte)G, (byte)B));
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => ColourPreview.Background = new SolidColorBrush(Color.FromRgb((byte)R, (byte)G, (byte)B));
 
-        private void Button_GenerateRGBString_Click(object sender, RoutedEventArgs e)
+        private void Button_GenerateRgbString_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetDataObject(string.Format("{0:d3},{1:d3},{2:d3}", (byte)R, (byte)G, (byte)B));
         }
