@@ -493,6 +493,51 @@ namespace Ink
                 currentPage.Background = background;
             }
         }
+
+        private void MenuItem_RemoveSelectedObject_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboBox_Objects.SelectedItem is InkObject selectedObject)
+            {
+                int currentObjectIndex = comboBox_Objects.SelectedIndex;
+                RemoveObject(selectedObject);
+                if (currentObjectIndex > 0)
+                {
+                    comboBox_Objects.SelectedIndex = currentObjectIndex - 1;
+                }
+                else if (currentObjectIndex == 0)
+                {
+                    comboBox_Objects.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void MenuItem_ClearAllObjectsOnPage_Click(object sender, RoutedEventArgs e)
+        {
+            while (currentPage.Objects.Count > 0)
+            {
+                RemoveObject(currentPage.Objects[^1]);
+            }
+        }
+
+        private void RemoveObject(InkObject objectToRemove)
+        {
+            foreach (InkPage page in pages)
+            {
+                foreach (InkObject inkObject in page.Objects)
+                {
+                    IEnumerable<InkProperty> synchronizedProperties = from property
+                                                                      in inkObject.Properties.Values
+                                                                      where property.ValueSourceObject == objectToRemove
+                                                                      select property;
+                    foreach (InkProperty property in synchronizedProperties)
+                    {
+                        property.DisableValueSynchronization();
+                    }
+                }
+            }
+            objectToRemove.RemoveFromPage(canvas_Page);
+            currentPage.Objects.Remove(objectToRemove);
+        }
     }
 
     public partial class MainWindow : Window
