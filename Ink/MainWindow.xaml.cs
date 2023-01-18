@@ -482,6 +482,17 @@ namespace Ink
                 gridSplitter_Vertical.Visibility = Visibility.Hidden;
             }
         }
+
+        private void MenuItem_CustomizeBackground_Click(object sender, RoutedEventArgs e)
+        {
+            ColorDialog colorDialog = new(true);
+            if (colorDialog.ShowDialog() == true)
+            {
+                Color background = Color.FromRgb((byte)colorDialog.R, (byte)colorDialog.G, (byte)colorDialog.B);
+                canvas_Page.Background = new SolidColorBrush(background);
+                currentPage.Background = background;
+            }
+        }
     }
 
     public partial class MainWindow : Window

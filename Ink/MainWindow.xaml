@@ -33,7 +33,7 @@
                 <MenuItem Header="Exit" Click="MenuItem_File_Exit_Click"/>
             </MenuItem>
             <MenuItem Header="Page">
-                <MenuItem Header="Background">
+                <MenuItem Header="Background colour">
                     <MenuItem Header="White" Click="MenuItems_BackgroundColour_Click"/>
                     <MenuItem Header="Black" Click="MenuItems_BackgroundColour_Click"/>
                     <MenuItem Header="Grey" Click="MenuItems_BackgroundColour_Click"/>
@@ -44,9 +44,9 @@
                     <MenuItem Header="Blue" Click="MenuItems_BackgroundColour_Click"/>
                     <MenuItem Header="Purple" Click="MenuItems_BackgroundColour_Click"/>
                     <Separator/>
-                    <MenuItem Header="Customize"/>
+                    <MenuItem Header="Customize" Click="MenuItem_CustomizeBackground_Click"/>
                     <Separator/>
-                    <MenuItem Header="Reset background" Click="MenuItem_ResetBackgroundColour_Click" />
+                    <MenuItem Header="Reset background colour" Click="MenuItem_ResetBackgroundColour_Click" />
                 </MenuItem>
                 <MenuItem Header="Show guides" IsCheckable="True" IsChecked="True" Checked="MenuItem_Guides_Checked" Unchecked="MenuItem_Guides_Unchecked"/>
             </MenuItem>
