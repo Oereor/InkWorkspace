@@ -207,6 +207,7 @@ namespace Ink
                         break;
                     case InkPropertyValueType.Input:
                         textBox_PropertyValue.Visibility = Visibility.Visible;
+                        textBox_PropertyValue.Focus();
                         textBox_PropertyValue.SetBinding(TextBox.TextProperty, binding);
                         break;
                     default:
