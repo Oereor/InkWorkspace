@@ -631,4 +631,69 @@ namespace Ink
             textBox.SetBinding(TextBox.HeightProperty, binding);
         }
     }
+
+    public class InkImageBox : InkObject
+    {
+        private Image image = new()
+        {
+            Source = new BitmapImage(new Uri(@"/PowerInk.png", UriKind.Relative)),
+            Stretch = Stretch.Uniform
+        };
+
+        public InkImageBox(string name) : base(name)
+        {
+            Properties = new Dictionary<string, InkProperty>
+            {
+                { "ImagePath", new InkProperty("ImagePath", InkPropertyValueType.Input, @"/PowerInk.png") },
+
+                { "Stretch", new InkProperty("Stretch", InkPropertyValueType.List, "Uniform")
+                { ValueList = new string[] { "Uniform", "Fill", "UniformToFill", "None" } } }
+            };
+            foreach (InkProperty property in Properties.Values)
+            {
+                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
+                property.Value = property.DefaultValue;
+            }
+            X = 514;
+            Y = 114;
+            image.MouseDown += (sender, e) => RaiseClickEvent(this, e);
+            image.MouseRightButtonDown += (sender, e) => MouseRightButtonDown?.Invoke(this, e);
+        }
+
+        private void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
+        {
+            switch (e.Name)
+            {
+                case "ImagePath":
+                    SetImageSource(e.NewValue);
+                    break;
+                case "Stretch":
+                    Stretch stretch = (Stretch)Enum.Parse(typeof(Stretch), e.NewValue);
+                    image.Stretch = stretch;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void SetImageSource(string uri)
+        {
+            if (uri == "")
+            {
+                image.Source = new BitmapImage(new Uri(Properties["ImagePath"].DefaultValue, UriKind.Relative));
+            }
+            else if (Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out Uri? resultUri))
+            {
+                image.Source = new BitmapImage(resultUri);
+            }
+        }
+
+        public override string Type => "TYPE: IMAGE BOX";
+
+        public override Dictionary<string, InkProperty> Properties { get; }
+
+        protected override FrameworkElement ShownElement => image;
+
+        public event MouseButtonEventHandler? MouseRightButtonDown;
+    }
 }

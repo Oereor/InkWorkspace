@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="19*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="17*"/>
@@ -52,7 +52,7 @@
             </MenuItem>
             <MenuItem Header="Object">
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
-                <MenuItem Header="New image box"/>
+                <MenuItem Header="New image box" Click="MenuItem_NewImageBox_Click" />
             </MenuItem>
             <MenuItem Header="Property">
                 <MenuItem Header="View value history"/>
@@ -110,7 +110,8 @@
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove" Click="Button_RemovePage_Click"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove all" Click="Button_RemoveAllPages_Click"/>
             <Separator/>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Rename"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Rename" Click="Button_RenamePage_Click"/>
+            <TextBox x:Name="textBox_PageRename" MinWidth="250" md:HintAssist.HelperText="Update of name takes effect on next time selected. " md:HintAssist.Hint="Page Name" md:HintAssist.IsFloating="True" Visibility="Collapsed" LostFocus="TextBox_PageRename_LostFocus" LostKeyboardFocus="TextBox_PageRename_LostKeyboardFocus"/>
         </ToolBar>
     </Grid>
 </Window>

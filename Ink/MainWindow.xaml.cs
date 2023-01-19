@@ -1,4 +1,5 @@
 ﻿using ColorPickerDialog;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -51,6 +52,13 @@ namespace Ink
                     comboBox_Objects.SelectedIndex = 0;
                 }
                 canvas_Page.Background = new SolidColorBrush(currentPage.Background);
+                Binding binding = new()
+                {
+                    Source = currentPage,
+                    Path = new PropertyPath("Name"),
+                    Mode = BindingMode.TwoWay
+                };
+                textBox_PageRename.SetBinding(TextBox.TextProperty, binding);
             }
         }
 
@@ -538,11 +546,59 @@ namespace Ink
             objectToRemove.RemoveFromPage(canvas_Page);
             currentPage.Objects.Remove(objectToRemove);
         }
+
+        private void Button_RenamePage_Click(object sender, RoutedEventArgs e)
+        {
+            if (!textBox_PageRename.IsVisible)
+            {
+                textBox_PageRename.Visibility = Visibility.Visible;
+            }
+            textBox_PageRename.Focus();
+        }
+
+        private void TextBox_PageRename_LostFocus(object sender, RoutedEventArgs e)
+        {
+            textBox_PageRename.Visibility = Visibility.Collapsed;
+            comboBox_Pages.Items.Refresh();
+        }
+
+        private void TextBox_PageRename_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            textBox_PageRename.Visibility = Visibility.Collapsed;
+            comboBox_Pages.Items.Refresh();
+        }
+
+        private void MenuItem_NewImageBox_Click(object sender, RoutedEventArgs e)
+        {
+            InkImageBox inkImageBox = new($"ImageBox{imageBoxCounter++}");
+            currentPage.Objects.Add(inkImageBox);
+            inkImageBox.AddToPage(canvas_Page);
+            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+            inkImageBox.Click += InkObject_Click;
+            inkImageBox.MouseRightButtonDown += InkImageBox_MouseRightButtonDown;
+        }
+
+        private void InkImageBox_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new()
+            {
+                Title = "Select image",
+                Filter = "JPEG|*.jpg|PNG|*.png|BMP|*.bmp"
+            };
+            if (openFileDialog.ShowDialog()==true)
+            {
+                string uri=openFileDialog.FileName;
+                if (sender is InkImageBox inkImageBox)
+                {
+                    inkImageBox.Properties["ImagePath"].Value= uri;
+                }
+            }
+        }
     }
 
     public partial class MainWindow : Window
     {
-        private int pageCounter = 1, textBoxCounter = 1;
+        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1;
         private readonly ObservableCollection<InkPage> pages;
         private InkPage currentPage;
         private InkObject? currentObject;
