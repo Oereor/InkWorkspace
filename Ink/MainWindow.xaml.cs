@@ -585,12 +585,12 @@ namespace Ink
                 Title = "Select image",
                 Filter = "JPEG|*.jpg|PNG|*.png|BMP|*.bmp"
             };
-            if (openFileDialog.ShowDialog()==true)
+            if (openFileDialog.ShowDialog() == true)
             {
-                string uri=openFileDialog.FileName;
+                string uri = openFileDialog.FileName;
                 if (sender is InkImageBox inkImageBox)
                 {
-                    inkImageBox.Properties["ImagePath"].Value= uri;
+                    inkImageBox.Properties["ImagePath"].Value = uri;
                 }
             }
         }
