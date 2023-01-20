@@ -3,8 +3,12 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +25,7 @@ namespace Ink
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    [Serializable]
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -592,6 +597,14 @@ namespace Ink
                 {
                     inkImageBox.Properties["ImagePath"].Value = uri;
                 }
+            }
+        }
+
+        private void MenuItem_ClearValueHistory_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentObject is not null && list_Properties.SelectedItem is InkProperty selectedProperty)
+            {
+                selectedProperty.ValueHistory.Clear();
             }
         }
     }

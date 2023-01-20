@@ -26,10 +26,6 @@
                 <MenuItem Header="New" Click="MenuItem_File_New_Click"/>
                 <MenuItem Header="New window" Click="MenuItem_File_NewWindow_Click"/>
                 <Separator/>
-                <MenuItem Header="Open"/>
-                <MenuItem Header="Save"/>
-                <MenuItem Header="Save as"/>
-                <Separator/>
                 <MenuItem Header="Exit" Click="MenuItem_File_Exit_Click"/>
             </MenuItem>
             <MenuItem Header="Page">
@@ -56,6 +52,7 @@
             </MenuItem>
             <MenuItem Header="Property">
                 <MenuItem Header="View value history"/>
+                <MenuItem Header="Clear value history" Click="MenuItem_ClearValueHistory_Click" />
                 <Separator/>
                 <MenuItem x:Name="menuItem_ResetSelectedProperty" Header="Reset value and disable value sync of selected property " Click="MenuItem_ResetSelectedProperty_Click"/>
                 <MenuItem x:Name="menuItem_ResetAllProperties" Header="Reset values and disable values sync of all properties" Click="MenuItem_ResetAllProperties_Click"/>

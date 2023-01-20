@@ -58,7 +58,7 @@ namespace Ink
                 InkPropertyValueChanged?.Invoke(this, new InkPropertyValueChangedEventArgs(Name, Value, ValueType));
             }
         }
-        public Stack<string> ValueHistory { get; } = new(64);   // 用于实现回溯属性值
+        public ObservableCollection<string> ValueHistory { get; } = new();   // 用于实现回溯属性值
         public InkProperty? ValueSource
         {
             get { return valueSource; }
@@ -99,19 +99,17 @@ namespace Ink
             this.value = value;
             if (addToValueHistory)
             {
-                ValueHistory.Push(value);
+                ValueHistory.Insert(0, value);
             }
         }
 
         public void RestoreValue(int index)
         {
-            for (int i = 0; i < index && ValueHistory.Count > 0; i++)
+            if (index<ValueHistory.Count)
             {
-                ValueHistory.Pop(); // 这意味着不能Redo
-            }
-            if (ValueHistory.Count > 0)
-            {
-                Value = ValueHistory.Pop();
+                SetValue(value, false);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+                InkPropertyValueChanged?.Invoke(this, new InkPropertyValueChangedEventArgs(Name, Value, ValueType));
             }
         }
 
@@ -120,7 +118,7 @@ namespace Ink
             if (property.ValueType == this.ValueType)
             {
                 property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 同步是通过订阅事件完成的
-                // 可能出现的问题：A订阅B，B又订阅A
+                // 可能出现的问题：A订阅B，B又订阅A，然后StackOverflow
                 this.Value = property.Value;
                 ValueSource = property;
                 valueSourceObject = sourceObject;
