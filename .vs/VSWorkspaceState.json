@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\ColorPickerDialog",
     "\\Ink"
   ],
-  "SelectedNode": "\\Ink\\MainWindow.xaml.cs",
+  "SelectedNode": "\\ColorPickerDialog\\ColorDialog.xaml.cs",
   "PreviewInSolutionExplorer": false
 }
