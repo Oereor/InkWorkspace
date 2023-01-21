@@ -105,9 +105,9 @@ namespace Ink
 
         public void RestoreValue(int index)
         {
-            if (index<ValueHistory.Count)
+            if (index < ValueHistory.Count)
             {
-                SetValue(value, false);
+                SetValue(ValueHistory[index], false);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
                 InkPropertyValueChanged?.Invoke(this, new InkPropertyValueChangedEventArgs(Name, Value, ValueType));
             }

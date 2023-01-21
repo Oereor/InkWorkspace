@@ -607,6 +607,29 @@ namespace Ink
                 selectedProperty.ValueHistory.Clear();
             }
         }
+
+        private void Popup_PropertyValueHistory_Opened(object sender, EventArgs e)
+        {
+            if (currentObject is not null && list_Properties.SelectedItem is InkProperty selectedProperty)
+            {
+                comboBox_PropertyValueHistory.ItemsSource = selectedProperty.ValueHistory;
+                comboBox_PropertyValueHistory.SelectedIndex = 0;
+                button_RestorePropertyValue.IsEnabled = !selectedProperty.ValueSyncEnabled;
+            }
+        }
+
+        private void MenuItem_ViewValueHistory_Click(object sender, RoutedEventArgs e)
+        {
+            popup_PropertyValueHistory.IsOpen = true;
+        }
+
+        private void Button_RestorePropertyValue_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentObject is not null && list_Properties.SelectedItem is InkProperty selectedProperty && comboBox_PropertyValueHistory.SelectedIndex >= 0)
+            {
+                selectedProperty.RestoreValue(comboBox_PropertyValueHistory.SelectedIndex);
+            }
+        }
     }
 
     public partial class MainWindow : Window

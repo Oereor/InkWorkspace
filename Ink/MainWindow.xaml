@@ -50,8 +50,8 @@
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
                 <MenuItem Header="New image box" Click="MenuItem_NewImageBox_Click" />
             </MenuItem>
-            <MenuItem Header="Property">
-                <MenuItem Header="View value history"/>
+            <MenuItem x:Name="menuItem_Property" Header="Property">
+                <MenuItem Header="View value history" Click="MenuItem_ViewValueHistory_Click"/>
                 <MenuItem Header="Clear value history" Click="MenuItem_ClearValueHistory_Click" />
                 <Separator/>
                 <MenuItem x:Name="menuItem_ResetSelectedProperty" Header="Reset value and disable value sync of selected property " Click="MenuItem_ResetSelectedProperty_Click"/>
@@ -110,5 +110,13 @@
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Rename" Click="Button_RenamePage_Click"/>
             <TextBox x:Name="textBox_PageRename" MinWidth="250" md:HintAssist.HelperText="Update of name takes effect on next time selected. " md:HintAssist.Hint="Page Name" md:HintAssist.IsFloating="True" Visibility="Collapsed" LostFocus="TextBox_PageRename_LostFocus" LostKeyboardFocus="TextBox_PageRename_LostKeyboardFocus"/>
         </ToolBar>
+        <Popup x:Name="popup_PropertyValueHistory" AllowsTransparency="False" PopupAnimation="Fade" PlacementTarget="{Binding ElementName=menuItem_Property}" StaysOpen="False" Opened="Popup_PropertyValueHistory_Opened" >
+            <StackPanel Background="White">
+                <Separator/>
+                <ComboBox x:Name="comboBox_PropertyValueHistory" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Value History" md:HintAssist.IsFloating="True"/>
+                <Separator/>
+                <Button x:Name="button_RestorePropertyValue" Style="{StaticResource MaterialDesignFlatButton}" Content="Restore" Click="Button_RestorePropertyValue_Click" />
+            </StackPanel>
+        </Popup>
     </Grid>
 </Window>
