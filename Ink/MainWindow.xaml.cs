@@ -613,7 +613,7 @@ namespace Ink
             if (currentObject is not null && list_Properties.SelectedItem is InkProperty selectedProperty)
             {
                 comboBox_PropertyValueHistory.ItemsSource = selectedProperty.ValueHistory;
-                comboBox_PropertyValueHistory.SelectedIndex = 0;
+                comboBox_PropertyValueHistory.SelectedIndex = -1;
                 button_RestorePropertyValue.IsEnabled = !selectedProperty.ValueSyncEnabled;
             }
         }
