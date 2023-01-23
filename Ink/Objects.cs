@@ -43,7 +43,7 @@ namespace Ink
     /* InkObject对象的属性 */
     public class InkProperty : INotifyPropertyChanged
     {
-        private string value = "";
+        private string value = string.Empty;
         private InkProperty? valueSource;   // 启用ValueSync时属性值的来源，即绑定同步的另一个InkProperty对象
         private InkObject? valueSourceObject;
 
@@ -150,7 +150,7 @@ namespace Ink
 
     public abstract class InkObject : INotifyPropertyChanged
     {
-        protected string name = "";
+        protected string name = "InkObject";
 
         public string Name
         {
@@ -242,7 +242,7 @@ namespace Ink
 
     public class InkPage : INotifyPropertyChanged   // 抽象出的Page对象
     {
-        private string name = "";
+        private string name = string.Empty;
 
         public InkPage(string name)
         {
@@ -260,7 +260,7 @@ namespace Ink
             }
         }
         public ObservableCollection<InkObject> Objects { get; } // 包含页面上所有InkObject，Page的主体
-        public Color Background { get; set; } = Colors.White;
+        public Brush Background { get; set; } = new SolidColorBrush(Colors.White);
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -299,7 +299,7 @@ namespace Ink
                 { ValueList = new string[] { "NoLine", "UnderLine", "OverLine", "Strikethrough" } } },
 
                 { "Foreground", new InkProperty("Foreground", InkPropertyValueType.Input, "000,000,000") },
-                { "Background", new InkProperty("Background", InkPropertyValueType.Input, "") }
+                { "Background", new InkProperty("Background", InkPropertyValueType.Input, string.Empty) }
             };
             foreach (InkProperty property in Properties.Values)
             {
@@ -324,7 +324,7 @@ namespace Ink
 
         private bool IsTextBoxShown { get; set; } = false;
 
-        public override string Type => "TYPE: TEXT BOX";
+        public override string Type => "Text Box";
 
         public override Dictionary<string, InkProperty> Properties { get; }
 
@@ -421,7 +421,7 @@ namespace Ink
 
         private void SetForeground(string foreground)
         {
-            if (foreground == "" || foreground is null)
+            if (foreground == string.Empty || foreground is null)
             {
                 textBlock.Foreground = new SolidColorBrush(Colors.Transparent);
             }
@@ -433,7 +433,7 @@ namespace Ink
 
         private void SetBackground(string background)
         {
-            if (background == "" || background is null)
+            if (background == string.Empty || background is null)
             {
                 textBlock.Background = new SolidColorBrush(Colors.Transparent);
             }
@@ -635,7 +635,8 @@ namespace Ink
         private Image image = new()
         {
             Source = new BitmapImage(new Uri(@"/PowerInk.png", UriKind.Relative)),
-            Stretch = Stretch.Uniform
+            Stretch = Stretch.Uniform,
+            ToolTip = "Right-click to load image"
         };
 
         public InkImageBox(string name) : base(name)
@@ -655,7 +656,7 @@ namespace Ink
             X = 514;
             Y = 114;
             image.MouseDown += (sender, e) => RaiseClickEvent(this, e);
-            image.MouseRightButtonDown += (sender, e) => MouseRightButtonDown?.Invoke(this, e);
+            image.MouseRightButtonUp += (sender, e) => MouseRightButtonUp?.Invoke(this, e);
         }
 
         private void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
@@ -676,22 +677,30 @@ namespace Ink
 
         private void SetImageSource(string uri)
         {
-            if (uri == "")
+            if (uri == string.Empty)
             {
                 image.Source = new BitmapImage(new Uri(Properties["ImagePath"].DefaultValue, UriKind.Relative));
             }
             else if (Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out Uri? resultUri))
             {
-                image.Source = new BitmapImage(resultUri);
+                try
+                {
+                    image.Source = new BitmapImage(resultUri);
+                }
+                catch (NotSupportedException)
+                {
+                    MessageBox.Show("File is not an image! ", "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Properties["ImagePath"].Value = string.Empty;
+                }
             }
         }
 
-        public override string Type => "TYPE: IMAGE BOX";
+        public override string Type => "Image Box";
 
         public override Dictionary<string, InkProperty> Properties { get; }
 
         protected override FrameworkElement ShownElement => image;
 
-        public event MouseButtonEventHandler? MouseRightButtonDown;
+        public event MouseButtonEventHandler? MouseRightButtonUp;
     }
 }

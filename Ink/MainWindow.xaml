@@ -41,9 +41,10 @@
                     <MenuItem Header="Purple" Click="MenuItems_BackgroundColour_Click"/>
                     <Separator/>
                     <MenuItem Header="Customize" Click="MenuItem_CustomizeBackground_Click"/>
-                    <Separator/>
-                    <MenuItem Header="Reset background colour" Click="MenuItem_ResetBackgroundColour_Click" />
                 </MenuItem>
+                <MenuItem Header="Background image" Click="MenuItem_BackgroundImage_Click"/>
+                <MenuItem Header="Reset background" Click="MenuItem_ResetBackground_Click" />
+                <Separator/>
                 <MenuItem Header="Show guides" IsCheckable="True" IsChecked="True" Checked="MenuItem_Guides_Checked" Unchecked="MenuItem_Guides_Unchecked"/>
             </MenuItem>
             <MenuItem Header="Object">
@@ -63,7 +64,7 @@
                 <MenuItem Header="Run submitted code"/>
             </MenuItem>
             <MenuItem Header="Colour">
-                <MenuItem Header="Visualize RGB" Click="MenuItem_VisualizeRGB_Click"/>
+                <MenuItem Header="RGB Visualizer" Click="MenuItem_RGBVisualizer_Click"/>
             </MenuItem>
         </Menu>
         <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0" Panel.ZIndex="-2" >

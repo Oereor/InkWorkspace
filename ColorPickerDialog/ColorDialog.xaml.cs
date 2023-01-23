@@ -91,7 +91,7 @@ namespace ColorPickerDialog
 
         private void Button_GenerateRgbString_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetDataObject(string.Format("{0:d3},{1:d3},{2:d3}", (byte)R, (byte)G, (byte)B));
+            Clipboard.SetDataObject($"{(byte)R:d3},{(byte)G:d3},{(byte)B:d3}");
         }
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)

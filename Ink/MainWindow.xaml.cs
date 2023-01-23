@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Ink
 {
@@ -56,7 +57,6 @@ namespace Ink
                 {
                     comboBox_Objects.SelectedIndex = 0;
                 }
-                canvas_Page.Background = new SolidColorBrush(currentPage.Background);
                 Binding binding = new()
                 {
                     Source = currentPage,
@@ -64,6 +64,13 @@ namespace Ink
                     Mode = BindingMode.TwoWay
                 };
                 textBox_PageRename.SetBinding(TextBox.TextProperty, binding);
+                binding = new Binding
+                {
+                    Source = currentPage,
+                    Path = new PropertyPath("Background"),
+                    Mode = BindingMode.TwoWay
+                };
+                canvas_Page.SetBinding(Canvas.BackgroundProperty, binding);
             }
         }
 
@@ -457,23 +464,15 @@ namespace Ink
                     _ => Colors.Transparent,
                 };
                 canvas_Page.Background = new SolidColorBrush(background);
-                if (currentPage is not null)
-                {
-                    currentPage.Background = background;
-                }
             }
         }
 
-        private void MenuItem_ResetBackgroundColour_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_ResetBackground_Click(object sender, RoutedEventArgs e)
         {
             canvas_Page.Background = new SolidColorBrush(Colors.White);
-            if (currentPage is not null)
-            {
-                currentPage.Background = Colors.White;
-            }
         }
 
-        private void MenuItem_VisualizeRGB_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_RGBVisualizer_Click(object sender, RoutedEventArgs e)
         {
             new ColorDialog(false).Show();
         }
@@ -503,7 +502,6 @@ namespace Ink
             {
                 Color background = Color.FromRgb((byte)colorDialog.R, (byte)colorDialog.G, (byte)colorDialog.B);
                 canvas_Page.Background = new SolidColorBrush(background);
-                currentPage.Background = background;
             }
         }
 
@@ -580,7 +578,7 @@ namespace Ink
             inkImageBox.AddToPage(canvas_Page);
             comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
             inkImageBox.Click += InkObject_Click;
-            inkImageBox.MouseRightButtonDown += InkImageBox_MouseRightButtonDown;
+            inkImageBox.MouseRightButtonUp += InkImageBox_MouseRightButtonDown;
         }
 
         private void InkImageBox_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -588,7 +586,7 @@ namespace Ink
             OpenFileDialog openFileDialog = new()
             {
                 Title = "Select image",
-                Filter = "JPEG|*.jpg|PNG|*.png|BMP|*.bmp"
+                Filter = "All files|*.*"
             };
             if (openFileDialog.ShowDialog() == true)
             {
@@ -628,6 +626,30 @@ namespace Ink
             if (currentObject is not null && list_Properties.SelectedItem is InkProperty selectedProperty && comboBox_PropertyValueHistory.SelectedIndex >= 0)
             {
                 selectedProperty.RestoreValue(comboBox_PropertyValueHistory.SelectedIndex);
+            }
+        }
+
+        private void MenuItem_BackgroundImage_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new()
+            {
+                Title = "Select image",
+                Filter = "All files|*.*"
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string uri = openFileDialog.FileName;
+                if (Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out Uri? resultUri))
+                {
+                    try
+                    {
+                        canvas_Page.Background = new ImageBrush(new BitmapImage(resultUri));
+                    }
+                    catch (NotSupportedException)
+                    {
+                        MessageBox.Show("File is not an image! ", "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
         }
     }
