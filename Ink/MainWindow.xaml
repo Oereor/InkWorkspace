@@ -101,7 +101,7 @@
         <Slider x:Name="slider_X" Grid.Row="2" Grid.Column="0" Panel.ZIndex="1" Width="{Binding ElementName=canvas_Page,Path=ActualWidth}" Maximum="{Binding ElementName=canvas_Page,Path=ActualWidth}" Visibility="Hidden"/>
         <Slider x:Name="slider_Y" Grid.Row="1" Grid.Column="1" Panel.ZIndex="1" IsDirectionReversed="True" Orientation="Vertical" Height="{Binding ElementName=canvas_Page,Path=ActualHeight}" Maximum="{Binding ElementName=canvas_Page,Path=ActualHeight}" Visibility="Hidden"/>
         <ToolBar Grid.Row="3" Grid.Column="0">
-            <ComboBox x:Name="comboBox_Pages" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Page" md:HintAssist.IsFloating="True" md:ComboBoxAssist.ShowSelectedItem="False" SelectionChanged="ComboBox_Pages_SelectionChanged" />
+            <ComboBox x:Name="comboBox_Pages" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:HintAssist.Hint="Current Page" md:HintAssist.IsFloating="True" md:ComboBoxAssist.ShowSelectedItem="False" SelectionChanged="ComboBox_Pages_SelectionChanged" />
             <Separator/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Add" Click="Button_AddPage_Click"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Remove" Click="Button_RemovePage_Click"/>

@@ -115,11 +115,11 @@ namespace Ink
 
         public void SyncValueWith(InkProperty property, InkObject sourceObject)
         {
-            if (property.ValueType == this.ValueType)
+            if (property.ValueType == this.ValueType && property.ValueSource != this)
             {
                 property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 同步是通过订阅事件完成的
-                // 可能出现的问题：A订阅B，B又订阅A，然后StackOverflow
-                this.Value = property.Value;
+                // 可能出现的问题：O1订阅O2，O2订阅O3，……，O(n)订阅O1，然后StackOverflow
+                Value = property.Value;
                 ValueSource = property;
                 valueSourceObject = sourceObject;
                 ValueSyncEnabled = true;
