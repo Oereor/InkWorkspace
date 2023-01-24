@@ -47,6 +47,7 @@ namespace Ink
                 canvas_Page.Children.Clear();
                 canvas_Page.Children.Add(gridSplitter_Horizontal);
                 canvas_Page.Children.Add(gridSplitter_Vertical);
+                canvas_Page.Children.Add(border_SelectionBorder);
                 /* 将选中Page的所有Object添加到显示区，并选中第一个Object（如果有） */
                 foreach (InkObject element in currentPage.Objects)
                 {
@@ -115,10 +116,24 @@ namespace Ink
                     binding = new Binding
                     {
                         Source = currentObject,
+                        Mode = BindingMode.OneWay,
+                        Path = new PropertyPath("Width")
+                    };
+                    border_SelectionBorder.SetBinding(Border.WidthProperty, binding);
+                    binding = new Binding
+                    {
+                        Source = currentObject,
                         Mode = BindingMode.TwoWay,
                         Path = new PropertyPath("Height")
                     };
                     textBox_Height.SetBinding(TextBox.TextProperty, binding);
+                    binding = new Binding
+                    {
+                        Source = currentObject,
+                        Mode = BindingMode.OneWay,
+                        Path = new PropertyPath("Height")
+                    };
+                    border_SelectionBorder.SetBinding(Border.HeightProperty, binding);
                     binding = new Binding
                     {
                         Source = currentObject,
@@ -133,6 +148,7 @@ namespace Ink
                     comboBox_SyncPropertyWithObject.Visibility = Visibility.Visible;
                     groupBox_Properties.Visibility = Visibility.Visible;
                     list_Properties.ItemsSource = currentObject.Properties.Values;
+                    border_SelectionBorder.Margin = new Thickness(currentObject.X, currentObject.Y, border_SelectionBorder.Margin.Right, border_SelectionBorder.Margin.Bottom);
                     if (list_Properties.Items.Count > 0)
                     {
                         list_Properties.SelectedIndex = 0;
@@ -165,8 +181,24 @@ namespace Ink
             InkTextBox inkTextBox = new($"TextBox{textBoxCounter++}");
             currentPage.Objects.Add(inkTextBox);
             inkTextBox.AddToPage(canvas_Page);
-            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
             inkTextBox.Click += InkObject_Click;
+            inkTextBox.PropertyChanged += InkObject_PositionChanged;
+            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+        }
+
+        private void InkObject_PositionChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (sender is InkObject senderInkObject && senderInkObject == currentObject)
+            {
+                if (e.PropertyName == "X")
+                {
+                    border_SelectionBorder.Margin = new Thickness(currentObject.X, border_SelectionBorder.Margin.Top, border_SelectionBorder.Margin.Right, border_SelectionBorder.Margin.Bottom);
+                }
+                else if (e.PropertyName == "Y")
+                {
+                    border_SelectionBorder.Margin = new Thickness(border_SelectionBorder.Margin.Left, currentObject.Y, border_SelectionBorder.Margin.Right, border_SelectionBorder.Margin.Bottom);
+                }
+            }
         }
 
         private void InkObject_Click(object sender, MouseButtonEventArgs e)
@@ -576,9 +608,10 @@ namespace Ink
             InkImageBox inkImageBox = new($"ImageBox{imageBoxCounter++}");
             currentPage.Objects.Add(inkImageBox);
             inkImageBox.AddToPage(canvas_Page);
-            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
             inkImageBox.Click += InkObject_Click;
             inkImageBox.MouseRightButtonUp += InkImageBox_MouseRightButtonDown;
+            inkImageBox.PropertyChanged += InkObject_PositionChanged;
+            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
         }
 
         private void InkImageBox_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -650,6 +683,52 @@ namespace Ink
                         MessageBox.Show("File is not an image! ", "Oops...", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
+            }
+        }
+
+        private void MenuItem_RemoveAllTextBoxes_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveAllObjectsOfType<InkTextBox>();
+        }
+
+        private void MenuItem_RemoveAllImageBoxes_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveAllObjectsOfType<InkImageBox>();
+        }
+
+        private void RemoveAllObjectsOfType<T>() where T : InkObject
+        {
+            List<T> objectTs = new();
+            foreach (InkObject inkObject in currentPage.Objects)
+            {
+                if (inkObject is T objectT)
+                {
+                    objectTs.Add(objectT);
+                }
+            }
+            foreach (T objectT in objectTs)
+            {
+                RemoveObject(objectT);
+            }
+            if (comboBox_Objects.Items.Count > 0)
+            {
+                comboBox_Objects.SelectedIndex = 0;
+            }
+        }
+
+        private void MenuItem_SelectionBorder_Checked(object sender, RoutedEventArgs e)
+        {
+            if (border_SelectionBorder is not null)
+            {
+                border_SelectionBorder.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void MenuItem_SelectionBorder_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (border_SelectionBorder is not null)
+            {
+                border_SelectionBorder.Visibility = Visibility.Hidden;
             }
         }
     }

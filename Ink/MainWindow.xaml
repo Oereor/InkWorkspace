@@ -46,10 +46,14 @@
                 <MenuItem Header="Reset background" Click="MenuItem_ResetBackground_Click" />
                 <Separator/>
                 <MenuItem Header="Show guides" IsCheckable="True" IsChecked="True" Checked="MenuItem_Guides_Checked" Unchecked="MenuItem_Guides_Unchecked"/>
+                <MenuItem Header="Show border around selected object" IsCheckable="True" IsChecked="True" Checked="MenuItem_SelectionBorder_Checked" Unchecked="MenuItem_SelectionBorder_Unchecked"/>
             </MenuItem>
             <MenuItem Header="Object">
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
                 <MenuItem Header="New image box" Click="MenuItem_NewImageBox_Click" />
+                <Separator/>
+                <MenuItem Header="Remove all text boxes on page" Click="MenuItem_RemoveAllTextBoxes_Click"/>
+                <MenuItem Header="Remove all image boxes on page" Click="MenuItem_RemoveAllImageBoxes_Click"/>
             </MenuItem>
             <MenuItem x:Name="menuItem_Property" Header="Property">
                 <MenuItem Header="View value history" Click="MenuItem_ViewValueHistory_Click"/>
@@ -70,6 +74,7 @@
         <Canvas x:Name="canvas_Page" Grid.Row="1" Grid.Column="0" Panel.ZIndex="-2" >
             <GridSplitter x:Name="gridSplitter_Horizontal" IsEnabled="False" Width="{Binding ElementName=canvas_Page,Path=ActualWidth}" Height="2" Canvas.Top="{Binding ElementName=slider_Y,Path=Value}" Visibility="Visible" Opacity="1"/>
             <GridSplitter x:Name="gridSplitter_Vertical" IsEnabled="False" Width="2" Height="{Binding ElementName=canvas_Page,Path=ActualHeight}" Canvas.Left="{Binding ElementName=slider_X,Path=Value}" Visibility="Visible" Opacity="1"/>
+            <Border x:Name="border_SelectionBorder" BorderBrush="Teal" BorderThickness="1"/>
         </Canvas>
         <Canvas x:Name="canvas_PropertiesPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3" Panel.ZIndex="0">
             <ComboBox x:Name="comboBox_Objects" Style="{StaticResource MaterialDesignOutlinedComboBox}" md:ComboBoxAssist.ShowSelectedItem="False" md:HintAssist.Hint="Object" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" Canvas.Top="5" SelectionChanged="ComboBox_Objects_SelectionChanged" DropDownOpened="ComboBox_Objects_DropDownOpened">

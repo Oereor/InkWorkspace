@@ -655,6 +655,8 @@ namespace Ink
             }
             X = 514;
             Y = 114;
+            Width = 128;
+            Height = 128;
             image.MouseDown += (sender, e) => RaiseClickEvent(this, e);
             image.MouseRightButtonUp += (sender, e) => MouseRightButtonUp?.Invoke(this, e);
         }
