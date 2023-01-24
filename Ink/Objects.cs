@@ -21,8 +21,8 @@ namespace Ink
     public enum InkPropertyValueType
     {
         Boolean,    // 显示为一个CheckBox
-        List,   // 给定值列表
-        Input   // 用户自行输入
+        List,   // 给定值列表，显示为ComboBox
+        Input   // 用户自行输入，显示为TextBox
     }
 
     /* InkProperty类中InkPropertyValueChanged事件的EventArgs */
@@ -710,11 +710,9 @@ namespace Ink
         public event MouseButtonEventHandler? MouseRightButtonUp;
     }
 
-    public class InkEllipse : InkObject
+    public abstract class InkShape : InkObject
     {
-        private Ellipse ellipse = new();
-
-        public InkEllipse(string name) : base(name)
+        public InkShape(string name) : base(name)
         {
             Properties = new Dictionary<string, InkProperty>()
             {
@@ -731,14 +729,13 @@ namespace Ink
             Y = 114;
             Width = 514;
             Height = 114;
-            ellipse.MouseDown += (sender, e) => RaiseClickEvent(this, e);
+            Shape.MouseDown += (sender, e) => RaiseClickEvent(this, e);
         }
-
-        public override string Type => "Ellipse";
 
         public override Dictionary<string, InkProperty> Properties { get; }
 
-        protected override FrameworkElement ShownElement => ellipse;
+        protected abstract Shape Shape { get; }
+
         protected override void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -749,7 +746,7 @@ namespace Ink
                 case "StrokeThickness":
                     if (double.TryParse(e.NewValue, out double thickness) && thickness >= 0)
                     {
-                        ellipse.StrokeThickness = thickness;
+                        Shape.StrokeThickness = thickness;
                     }
                     break;
                 case "Fill":
@@ -764,11 +761,11 @@ namespace Ink
         {
             if (colour == string.Empty)
             {
-                ellipse.Stroke = new SolidColorBrush(Colors.Transparent);
+                Shape.Stroke = new SolidColorBrush(Colors.Transparent);
             }
             else
             {
-                ellipse.Stroke = new SolidColorBrush(ColourFromString(colour));
+                Shape.Stroke = new SolidColorBrush(ColourFromString(colour));
             }
         }
 
@@ -776,12 +773,28 @@ namespace Ink
         {
             if (colour == string.Empty)
             {
-                ellipse.Fill = new SolidColorBrush(Colors.Transparent);
+                Shape.Fill = new SolidColorBrush(Colors.Transparent);
             }
             else
             {
-                ellipse.Fill = new SolidColorBrush(ColourFromString(colour));
+                Shape.Fill = new SolidColorBrush(ColourFromString(colour));
             }
         }
+    }
+
+    public class InkEllipse : InkShape
+    {
+        private Ellipse ellipse = new();
+
+        public InkEllipse(string name) : base(name)
+        {
+            
+        }
+
+        public override string Type => "Ellipse";
+
+        protected override FrameworkElement ShownElement => ellipse;
+
+        protected override Shape Shape => ellipse;
     }
 }
