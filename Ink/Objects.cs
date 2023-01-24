@@ -788,7 +788,7 @@ namespace Ink
 
         public InkEllipse(string name) : base(name)
         {
-            
+
         }
 
         public override string Type => "Ellipse";
@@ -796,5 +796,21 @@ namespace Ink
         protected override FrameworkElement ShownElement => ellipse;
 
         protected override Shape Shape => ellipse;
+    }
+
+    public class InkRectangle : InkShape
+    {
+        private Rectangle rectangle = new();
+
+        public InkRectangle(string name) : base(name)
+        {
+
+        }
+
+        public override string Type => "Rectangle";
+
+        protected override FrameworkElement ShownElement => rectangle;
+
+        protected override Shape Shape => rectangle;
     }
 }

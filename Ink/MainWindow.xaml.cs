@@ -741,11 +741,21 @@ namespace Ink
             inkEllipse.PropertyChanged += InkObject_PositionChanged;
             comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
         }
+
+        private void MenuItem_NewRectangle_Click(object sender, RoutedEventArgs e)
+        {
+            InkRectangle inkRectangle = new($"Rectangle{rectangleCounter++}");
+            currentPage.Objects.Add(inkRectangle);
+            inkRectangle.AddToPage(canvas_Page);
+            inkRectangle.Click += InkObject_Click;
+            inkRectangle.PropertyChanged += InkObject_PositionChanged;
+            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+        }
     }
 
     public partial class MainWindow : Window
     {
-        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1, ellipseCounter = 1;
+        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1, ellipseCounter = 1, rectangleCounter = 1;
         private readonly ObservableCollection<InkPage> pages;
         private InkPage currentPage;
         private InkObject? currentObject;
