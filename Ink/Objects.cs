@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Ink
 {
@@ -26,13 +28,13 @@ namespace Ink
     /* InkProperty类中InkPropertyValueChanged事件的EventArgs */
     public class InkPropertyValueChangedEventArgs : EventArgs
     {
-        public string Name { get; } // 值发生改变的属性名称
+        public string PropertyName { get; } // 值发生改变的属性名称
         public string NewValue { get; } // 改变后的属性值
         public InkPropertyValueType ValueType { get; }
 
         public InkPropertyValueChangedEventArgs(string name, string newValue, InkPropertyValueType valueType)
         {
-            Name = name;
+            PropertyName = name;
             NewValue = newValue;
             ValueType = valueType;
         }
@@ -152,6 +154,26 @@ namespace Ink
     {
         protected string name = "InkObject";
 
+        protected static Color ColourFromString(string rgb)
+        {
+            Regex regex = new(@"^\d{3},\d{3},\d{3}$");
+            if (rgb is not null && regex.IsMatch(rgb))
+            {
+                if (byte.TryParse(rgb[..3], out byte r) && byte.TryParse(rgb[4..7], out byte g) && byte.TryParse(rgb[8..11], out byte b))
+                {
+                    return Color.FromRgb(r, g, b);
+                }
+                else
+                {
+                    return Colors.Transparent;
+                }
+            }
+            else
+            {
+                return Colors.Transparent;
+            }
+        }
+
         public string Name
         {
             get { return name; }
@@ -233,6 +255,8 @@ namespace Ink
         {
             page.Children.Remove(ShownElement);
         }
+
+        protected abstract void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e);
 
         protected void RaiseClickEvent(object sender, MouseButtonEventArgs e)
         {
@@ -372,9 +396,9 @@ namespace Ink
         }
 
         /* 响应后台属性值的更改 */
-        private void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
+        protected override void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
         {
-            switch (e.Name)
+            switch (e.PropertyName)
             {
                 case "Text":
                     textBlock.Text = e.NewValue; break;
@@ -421,7 +445,7 @@ namespace Ink
 
         private void SetForeground(string foreground)
         {
-            if (foreground == string.Empty || foreground is null)
+            if (foreground == string.Empty)
             {
                 textBlock.Foreground = new SolidColorBrush(Colors.Transparent);
             }
@@ -433,33 +457,13 @@ namespace Ink
 
         private void SetBackground(string background)
         {
-            if (background == string.Empty || background is null)
+            if (background == string.Empty)
             {
                 textBlock.Background = new SolidColorBrush(Colors.Transparent);
             }
             else
             {
                 textBlock.Background = new SolidColorBrush(ColourFromString(background));
-            }
-        }
-
-        private Color ColourFromString(string rgb)
-        {
-            Regex regex = new(@"^\d{3},\d{3},\d{3}$");
-            if (rgb is not null && regex.IsMatch(rgb))
-            {
-                if (byte.TryParse(rgb[..3], out byte r) && byte.TryParse(rgb[4..7], out byte g) && byte.TryParse(rgb[8..11], out byte b))
-                {
-                    return Color.FromRgb(r, g, b);
-                }
-                else
-                {
-                    return Colors.Transparent;
-                }
-            }
-            else
-            {
-                return Colors.Transparent;
             }
         }
 
@@ -632,7 +636,7 @@ namespace Ink
 
     public class InkImageBox : InkObject
     {
-        private Image image = new()
+        private System.Windows.Controls.Image image = new()
         {
             Source = new BitmapImage(new Uri(@"/PowerInk.png", UriKind.Relative)),
             Stretch = Stretch.Uniform,
@@ -661,9 +665,9 @@ namespace Ink
             image.MouseRightButtonUp += (sender, e) => MouseRightButtonUp?.Invoke(this, e);
         }
 
-        private void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
+        protected override void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
         {
-            switch (e.Name)
+            switch (e.PropertyName)
             {
                 case "ImagePath":
                     SetImageSource(e.NewValue);
@@ -704,5 +708,80 @@ namespace Ink
         protected override FrameworkElement ShownElement => image;
 
         public event MouseButtonEventHandler? MouseRightButtonUp;
+    }
+
+    public class InkEllipse : InkObject
+    {
+        private Ellipse ellipse = new();
+
+        public InkEllipse(string name) : base(name)
+        {
+            Properties = new Dictionary<string, InkProperty>()
+            {
+                { "Stroke", new InkProperty("Stroke", InkPropertyValueType.Input, "000,000,000") },
+                { "StrokeThickness", new InkProperty("StrokeThickness", InkPropertyValueType.Input, "1") },
+                { "Fill", new InkProperty("Fill", InkPropertyValueType.Input, string.Empty) }
+            };
+            foreach (InkProperty property in Properties.Values)
+            {
+                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
+                property.Value = property.DefaultValue;
+            }
+            X = 514;
+            Y = 114;
+            Width = 514;
+            Height = 114;
+            ellipse.MouseDown += (sender, e) => RaiseClickEvent(this, e);
+        }
+
+        public override string Type => "Ellipse";
+
+        public override Dictionary<string, InkProperty> Properties { get; }
+
+        protected override FrameworkElement ShownElement => ellipse;
+        protected override void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Stroke":
+                    SetStroke(e.NewValue);
+                    break;
+                case "StrokeThickness":
+                    if (double.TryParse(e.NewValue, out double thickness) && thickness >= 0)
+                    {
+                        ellipse.StrokeThickness = thickness;
+                    }
+                    break;
+                case "Fill":
+                    SetFill(e.NewValue);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void SetStroke(string colour)
+        {
+            if (colour == string.Empty)
+            {
+                ellipse.Stroke = new SolidColorBrush(Colors.Transparent);
+            }
+            else
+            {
+                ellipse.Stroke = new SolidColorBrush(ColourFromString(colour));
+            }
+        }
+
+        private void SetFill(string colour)
+        {
+            if (colour == string.Empty)
+            {
+                ellipse.Fill = new SolidColorBrush(Colors.Transparent);
+            }
+            else
+            {
+                ellipse.Fill = new SolidColorBrush(ColourFromString(colour));
+            }
+        }
     }
 }

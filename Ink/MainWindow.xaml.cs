@@ -731,11 +731,21 @@ namespace Ink
                 border_SelectionBorder.Visibility = Visibility.Hidden;
             }
         }
+
+        private void MenuItem_NewEllipse_Click(object sender, RoutedEventArgs e)
+        {
+            InkEllipse inkEllipse = new($"Ellipse{ellipseCounter++}");
+            currentPage.Objects.Add(inkEllipse);
+            inkEllipse.AddToPage(canvas_Page);
+            inkEllipse.Click += InkObject_Click;
+            inkEllipse.PropertyChanged += InkObject_PositionChanged;
+            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+        }
     }
 
     public partial class MainWindow : Window
     {
-        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1;
+        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1, ellipseCounter = 1;
         private readonly ObservableCollection<InkPage> pages;
         private InkPage currentPage;
         private InkObject? currentObject;

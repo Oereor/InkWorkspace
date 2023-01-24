@@ -51,6 +51,7 @@
             <MenuItem Header="Object">
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
                 <MenuItem Header="New image box" Click="MenuItem_NewImageBox_Click" />
+                <MenuItem Header="New ellipse" Click="MenuItem_NewEllipse_Click"/>
                 <Separator/>
                 <MenuItem Header="Remove all text boxes on page" Click="MenuItem_RemoveAllTextBoxes_Click"/>
                 <MenuItem Header="Remove all image boxes on page" Click="MenuItem_RemoveAllImageBoxes_Click"/>
@@ -86,7 +87,7 @@
                 </ComboBox.ContextMenu>
             </ComboBox>
             <TextBox x:Name="textBox_Name" md:HintAssist.Hint="Name" md:HintAssist.IsFloating="True" md:HintAssist.HelperText="Update of name takes effect on next time selected. " md:TextFieldAssist.HasClearButton="True" Canvas.Top="51" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}" LostFocus="TextBox_Name_LostFocus"/>
-            <GroupBox x:Name="groupBox_Type" Header="TYPE: " Canvas.Top="105" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}">
+            <GroupBox x:Name="groupBox_Type" Header="Object" Canvas.Top="105" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}">
                 <StackPanel>
                     <TextBox x:Name="textBox_X" md:HintAssist.Hint="X" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
                     <TextBox x:Name="textBox_Y" md:HintAssist.Hint="Y" md:HintAssist.IsFloating="True" Width="{Binding ElementName=canvas_PropertiesPanel,Path=ActualWidth}"/>
