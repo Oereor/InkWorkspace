@@ -732,30 +732,43 @@ namespace Ink
             }
         }
 
-        private void MenuItem_NewEllipse_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_NewInkShape_Click(object sender,RoutedEventArgs e)
         {
-            InkEllipse inkEllipse = new($"Ellipse{ellipseCounter++}");
-            currentPage.Objects.Add(inkEllipse);
-            inkEllipse.AddToPage(canvas_Page);
-            inkEllipse.Click += InkObject_Click;
-            inkEllipse.PropertyChanged += InkObject_PositionChanged;
-            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+            if (sender is MenuItem menuItem&&menuItem.Header is string header)
+            {
+                switch (header)
+                {
+                    case "New line":
+                        InkLine inkLine = new($"Line{lineCounter++}");
+                        AddNewInkShape(inkLine);
+                        break;
+                    case "New ellipse":
+                        InkEllipse inkEllipse = new($"Ellipse{ellipseCounter++}");
+                        AddNewInkShape(inkEllipse);
+                        break;
+                    case "New rectangle":
+                        InkRectangle inkRectangle = new($"Rectangle{rectangleCounter++}");
+                        AddNewInkShape(inkRectangle);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
-        private void MenuItem_NewRectangle_Click(object sender, RoutedEventArgs e)
+        private void AddNewInkShape(InkShape inkShape)
         {
-            InkRectangle inkRectangle = new($"Rectangle{rectangleCounter++}");
-            currentPage.Objects.Add(inkRectangle);
-            inkRectangle.AddToPage(canvas_Page);
-            inkRectangle.Click += InkObject_Click;
-            inkRectangle.PropertyChanged += InkObject_PositionChanged;
+            currentPage.Objects.Add(inkShape);
+            inkShape.AddToPage(canvas_Page);
+            inkShape.Click += InkObject_Click;
+            inkShape.PropertyChanged += InkObject_PositionChanged;
             comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
         }
     }
 
     public partial class MainWindow : Window
     {
-        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1, ellipseCounter = 1, rectangleCounter = 1;
+        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1, ellipseCounter = 1, rectangleCounter = 1, lineCounter = 1;
         private readonly ObservableCollection<InkPage> pages;
         private InkPage currentPage;
         private InkObject? currentObject;

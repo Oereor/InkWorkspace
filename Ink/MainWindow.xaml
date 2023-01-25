@@ -51,8 +51,9 @@
             <MenuItem Header="Object">
                 <MenuItem Header="New text box" Click="MenuItem_NewTextBox_Click" />
                 <MenuItem Header="New image box" Click="MenuItem_NewImageBox_Click" />
-                <MenuItem Header="New ellipse" Click="MenuItem_NewEllipse_Click"/>
-                <MenuItem Header="New rectangle" Click="MenuItem_NewRectangle_Click"/>
+                <MenuItem Header="New line" Click="MenuItem_NewInkShape_Click"/>
+                <MenuItem Header="New ellipse" Click="MenuItem_NewInkShape_Click"/>
+                <MenuItem Header="New rectangle" Click="MenuItem_NewInkShape_Click"/>
                 <Separator/>
                 <MenuItem Header="Remove all text boxes on page" Click="MenuItem_RemoveAllTextBoxes_Click"/>
                 <MenuItem Header="Remove all image boxes on page" Click="MenuItem_RemoveAllImageBoxes_Click"/>

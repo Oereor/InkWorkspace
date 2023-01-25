@@ -720,15 +720,16 @@ namespace Ink
                 { "StrokeThickness", new InkProperty("StrokeThickness", InkPropertyValueType.Input, "1") },
                 { "Fill", new InkProperty("Fill", InkPropertyValueType.Input, string.Empty) }
             };
-            foreach (InkProperty property in Properties.Values)
+            if (Properties is not null)
             {
-                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
-                property.Value = property.DefaultValue;
+                foreach (InkProperty property in Properties.Values)
+                {
+                    property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
+                    property.Value = property.DefaultValue;
+                }
             }
             X = 514;
             Y = 114;
-            Width = 514;
-            Height = 114;
             Shape.MouseDown += (sender, e) => RaiseClickEvent(this, e);
         }
 
@@ -757,7 +758,7 @@ namespace Ink
             }
         }
 
-        private void SetStroke(string colour)
+        protected void SetStroke(string colour)
         {
             if (colour == string.Empty)
             {
@@ -769,7 +770,7 @@ namespace Ink
             }
         }
 
-        private void SetFill(string colour)
+        protected void SetFill(string colour)
         {
             if (colour == string.Empty)
             {
@@ -788,7 +789,8 @@ namespace Ink
 
         public InkEllipse(string name) : base(name)
         {
-
+            Width = 514;
+            Height = 114;
         }
 
         public override string Type => "Ellipse";
@@ -804,7 +806,8 @@ namespace Ink
 
         public InkRectangle(string name) : base(name)
         {
-
+            Width = 514;
+            Height = 114;
         }
 
         public override string Type => "Rectangle";
@@ -812,5 +815,71 @@ namespace Ink
         protected override FrameworkElement ShownElement => rectangle;
 
         protected override Shape Shape => rectangle;
+    }
+
+    public class InkLine : InkShape
+    {
+        private Line line = new();
+
+        public InkLine(string name) : base(name)
+        {
+            Properties = new Dictionary<string, InkProperty>()
+            {
+                { "Stroke", new InkProperty("Stroke", InkPropertyValueType.Input, "000,000,000") },
+                { "StrokeThickness", new InkProperty("StrokeThickness", InkPropertyValueType.Input, "1") },
+                { "StartPoint", new InkProperty("StartPoint", InkPropertyValueType.Input, "0,114") },
+                { "EndPoint", new InkProperty("EndPoint", InkPropertyValueType.Input, "514,0") },
+            };
+            foreach (InkProperty property in Properties.Values)
+            {
+                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
+                property.Value = property.DefaultValue;
+            }
+        }
+
+        public override string Type => "Line";
+
+        public override Dictionary<string, InkProperty> Properties { get; }
+
+        protected override Shape Shape => line;
+
+        protected override FrameworkElement ShownElement => line;
+
+        protected override void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Stroke":
+                    SetStroke(e.NewValue);
+                    break;
+                case "StrokeThickness":
+                    if (double.TryParse(e.NewValue, out double thickness) && thickness >= 0)
+                    {
+                        Shape.StrokeThickness = thickness;
+                    }
+                    break;
+                case "StartPoint":
+                    (line.X1, line.Y1) = GetCoordinateFromString(e.NewValue);
+                    break;
+                case "EndPoint":
+                    (line.X2, line.Y2) = GetCoordinateFromString(e.NewValue);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private (double x, double y) GetCoordinateFromString(string coordinate)
+        {
+            string[] coordinates = coordinate.Split(',');
+            if (coordinates.Length == 2 && double.TryParse(coordinates[0], out double xCoordinate) && double.TryParse(coordinates[1], out double yCoordinate))
+            {
+                return (xCoordinate, yCoordinate);
+            }
+            else
+            {
+                return (514, 114);
+            }
+        }
     }
 }
