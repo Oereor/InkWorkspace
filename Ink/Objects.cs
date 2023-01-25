@@ -296,7 +296,7 @@ namespace Ink
 
     public class InkTextBox : InkObject
     {
-        private TextBox textBox = new() { AcceptsReturn = true };    // 在InkTextBox获得焦点时显示以直接编辑文本
+        private readonly TextBox textBox = new() { AcceptsReturn = true };    // 在InkTextBox获得焦点时显示以直接编辑文本
         private TextBlock textBlock = new();    // 无焦点时显示
 
         public InkTextBox(string name) : base(name)
@@ -728,6 +728,10 @@ namespace Ink
                     property.Value = property.DefaultValue;
                 }
             }
+            else
+            {
+                Properties = new Dictionary<string, InkProperty>();
+            }
             X = 514;
             Y = 114;
             Shape.MouseDown += (sender, e) => RaiseClickEvent(this, e);
@@ -785,7 +789,7 @@ namespace Ink
 
     public class InkEllipse : InkShape
     {
-        private Ellipse ellipse = new();
+        private readonly Ellipse ellipse = new();
 
         public InkEllipse(string name) : base(name)
         {
@@ -802,7 +806,7 @@ namespace Ink
 
     public class InkRectangle : InkShape
     {
-        private Rectangle rectangle = new();
+        private readonly Rectangle rectangle = new();
 
         public InkRectangle(string name) : base(name)
         {
@@ -819,7 +823,7 @@ namespace Ink
 
     public class InkLine : InkShape
     {
-        private Line line = new();
+        private readonly Line line = new();
 
         public InkLine(string name) : base(name)
         {
@@ -869,7 +873,7 @@ namespace Ink
             }
         }
 
-        private (double x, double y) GetCoordinateFromString(string coordinate)
+        private static (double x, double y) GetCoordinateFromString(string coordinate)
         {
             string[] coordinates = coordinate.Split(',');
             if (coordinates.Length == 2 && double.TryParse(coordinates[0], out double xCoordinate) && double.TryParse(coordinates[1], out double yCoordinate))
