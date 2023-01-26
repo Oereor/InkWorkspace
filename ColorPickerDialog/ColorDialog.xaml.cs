@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -49,12 +50,14 @@ namespace ColorPickerDialog
                 button_Ok.Visibility = Visibility.Visible;
                 button_Cancel.Visibility = Visibility.Visible;
                 button_GenerateRgbString.Visibility = Visibility.Hidden;
+                button_ReadRgbString.Visibility = Visibility.Hidden;
             }
             else
             {
                 button_Ok.Visibility = Visibility.Hidden;
                 button_Cancel.Visibility = Visibility.Hidden;
                 button_GenerateRgbString.Visibility = Visibility.Visible;
+                button_ReadRgbString.Visibility = Visibility.Visible;
             }
             txtR.Text = "255";
             txtG.Text = "255";
@@ -94,6 +97,26 @@ namespace ColorPickerDialog
             Clipboard.SetDataObject($"{(byte)R:d3},{(byte)G:d3},{(byte)B:d3}");
         }
 
+        private void Button_ReadRgbString_Click(object sender, RoutedEventArgs e)
+        {
+            IDataObject dataObject = Clipboard.GetDataObject();
+            if (dataObject.GetDataPresent(DataFormats.Text))
+            {
+                string rgbString = (string)dataObject.GetData(DataFormats.Text);
+                Regex regex= RgbRegex();
+                if (rgbString is not null && regex.IsMatch(rgbString))
+                {
+                    string[] rgbStrings = rgbString.Split(',');
+                    if (byte.TryParse(rgbStrings[0], out byte r) && byte.TryParse(rgbStrings[1], out byte g) && byte.TryParse(rgbStrings[2], out byte b))
+                    {
+                        txtR.Text=r.ToString();
+                        txtG.Text=g.ToString();
+                        txtB.Text=b.ToString();
+                    }
+                }
+            }
+        }
+
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             ColorRgbChanged?.Invoke(this, new ColorRgbChangedEventArgs((byte)R, (byte)G, (byte)B));
@@ -101,6 +124,9 @@ namespace ColorPickerDialog
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e) => DialogResult = false;
+
+        [GeneratedRegex("\\d{3}\\s*,\\s*\\d{3}\\s*,\\s*\\d{3}")]
+        private static partial Regex RgbRegex();
     }
 
     public delegate void ColorRgbChangedEventHandler(object sender, ColorRgbChangedEventArgs e);

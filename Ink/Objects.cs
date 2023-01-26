@@ -150,16 +150,17 @@ namespace Ink
         }
     }
 
-    public abstract class InkObject : INotifyPropertyChanged
+    public abstract partial class InkObject : INotifyPropertyChanged
     {
         protected string name = "InkObject";
 
         protected static Color ColourFromString(string rgb)
         {
-            Regex regex = new(@"^\d{3},\d{3},\d{3}$");
+            Regex regex = RgbRegex();
             if (rgb is not null && regex.IsMatch(rgb))
             {
-                if (byte.TryParse(rgb[..3], out byte r) && byte.TryParse(rgb[4..7], out byte g) && byte.TryParse(rgb[8..11], out byte b))
+                string[] rgbStrings=rgb.Split(',');
+                if (byte.TryParse(rgbStrings[0], out byte r) && byte.TryParse(rgbStrings[1], out byte g) && byte.TryParse(rgbStrings[2], out byte b))
                 {
                     return Color.FromRgb(r, g, b);
                 }
@@ -262,6 +263,9 @@ namespace Ink
         {
             Click?.Invoke(sender, e);
         }
+
+        [GeneratedRegex("^\\d{3}\\s*,\\s*\\d{3}\\s*,\\s*\\d{3}$")]
+        private static partial Regex RgbRegex();
     }
 
     public class InkPage : INotifyPropertyChanged   // 抽象出的Page对象
