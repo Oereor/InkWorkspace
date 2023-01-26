@@ -3,23 +3,13 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Ink
 {
@@ -296,7 +286,7 @@ namespace Ink
         private void MenuItem_File_New_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
-            this.Close();
+            Close();
         }
 
         private void MenuItem_File_NewWindow_Click(object sender, RoutedEventArgs e)
@@ -306,7 +296,7 @@ namespace Ink
 
         private void MenuItem_File_Exit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void CheckBox_SyncProperty_Click(object sender, RoutedEventArgs e)
@@ -475,7 +465,7 @@ namespace Ink
         private void Button_RemoveAllPages_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
-            this.Close();
+            Close();
         }
 
         private void MenuItems_BackgroundColour_Click(object sender, RoutedEventArgs e)
@@ -732,9 +722,9 @@ namespace Ink
             }
         }
 
-        private void MenuItem_NewInkShape_Click(object sender,RoutedEventArgs e)
+        private void MenuItem_NewInkShape_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem menuItem&&menuItem.Header is string header)
+            if (sender is MenuItem menuItem && menuItem.Header is string header)
             {
                 switch (header)
                 {

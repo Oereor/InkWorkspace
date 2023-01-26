@@ -1,5 +1,4 @@
-﻿using ColorPickerDialog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,13 +6,10 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Ink
 {
@@ -117,7 +113,7 @@ namespace Ink
 
         public void SyncValueWith(InkProperty property, InkObject sourceObject)
         {
-            if (property.ValueType == this.ValueType && property.ValueSource != this)
+            if (property.ValueType == ValueType && property.ValueSource != this)
             {
                 property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 同步是通过订阅事件完成的
                 // 可能出现的问题：O1订阅O2，O2订阅O3，……，O(n)订阅O1，然后StackOverflow
@@ -159,7 +155,7 @@ namespace Ink
             Regex regex = RgbRegex();
             if (rgb is not null && regex.IsMatch(rgb))
             {
-                string[] rgbStrings=rgb.Split(',');
+                string[] rgbStrings = rgb.Split(',');
                 if (byte.TryParse(rgbStrings[0], out byte r) && byte.TryParse(rgbStrings[1], out byte g) && byte.TryParse(rgbStrings[2], out byte b))
                 {
                     return Color.FromRgb(r, g, b);
@@ -301,7 +297,7 @@ namespace Ink
     public class InkTextBox : InkObject
     {
         private readonly TextBox textBox = new() { AcceptsReturn = true };    // 在InkTextBox获得焦点时显示以直接编辑文本
-        private TextBlock textBlock = new();    // 无焦点时显示
+        private readonly TextBlock textBlock = new();    // 无焦点时显示
 
         public InkTextBox(string name) : base(name)
         {
@@ -471,18 +467,18 @@ namespace Ink
             }
         }
 
-        private static Color GetCustomColour()
-        {
-            ColorDialog colorDialog = new(true);
-            if (colorDialog.ShowDialog() == true)
-            {
-                return Color.FromRgb((byte)colorDialog.R, (byte)colorDialog.G, (byte)colorDialog.B);
-            }
-            else
-            {
-                return Colors.Transparent;
-            }
-        }
+        //private static Color GetCustomColour()
+        //{
+        //    ColorDialog colorDialog = new(true);
+        //    if (colorDialog.ShowDialog() == true)
+        //    {
+        //        return Color.FromRgb((byte)colorDialog.R, (byte)colorDialog.G, (byte)colorDialog.B);
+        //    }
+        //    else
+        //    {
+        //        return Colors.Transparent;
+        //    }
+        //}
 
         private void SetTextAlignment(string textAlignment)
         {
@@ -640,7 +636,7 @@ namespace Ink
 
     public class InkImageBox : InkObject
     {
-        private System.Windows.Controls.Image image = new()
+        private readonly Image image = new()
         {
             Source = new BitmapImage(new Uri(@"/PowerInk.png", UriKind.Relative)),
             Stretch = Stretch.Uniform,
