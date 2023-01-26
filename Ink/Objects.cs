@@ -154,7 +154,7 @@ namespace Ink
     {
         protected string name = "InkObject";
 
-        protected static Color ColourFromString(string rgb)
+        protected static Color GetColourFromString(string rgb)
         {
             Regex regex = RgbRegex();
             if (rgb is not null && regex.IsMatch(rgb))
@@ -455,7 +455,7 @@ namespace Ink
             }
             else
             {
-                textBlock.Foreground = new SolidColorBrush(ColourFromString(foreground));
+                textBlock.Foreground = new SolidColorBrush(GetColourFromString(foreground));
             }
         }
 
@@ -467,7 +467,7 @@ namespace Ink
             }
             else
             {
-                textBlock.Background = new SolidColorBrush(ColourFromString(background));
+                textBlock.Background = new SolidColorBrush(GetColourFromString(background));
             }
         }
 
@@ -774,7 +774,7 @@ namespace Ink
             }
             else
             {
-                Shape.Stroke = new SolidColorBrush(ColourFromString(colour));
+                Shape.Stroke = new SolidColorBrush(GetColourFromString(colour));
             }
         }
 
@@ -786,7 +786,7 @@ namespace Ink
             }
             else
             {
-                Shape.Fill = new SolidColorBrush(ColourFromString(colour));
+                Shape.Fill = new SolidColorBrush(GetColourFromString(colour));
             }
         }
     }
