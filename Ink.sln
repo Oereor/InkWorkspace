@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ink", "Ink\Ink.csproj", "{C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InkCodeEditor", "InkCodeEditor\InkCodeEditor.csproj", "{EF37D151-D020-4335-8E59-99D60EDD6517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPickerDialog", "ColorPickerDialog\ColorPickerDialog.csproj", "{C48E8DD5-542E-43BE-AA6F-3FFD23D3428F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorPickerDialog", "ColorPickerDialog\ColorPickerDialog.csproj", "{C48E8DD5-542E-43BE-AA6F-3FFD23D3428F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C78DA186-239F-4267-8DA4-31297A5A5758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

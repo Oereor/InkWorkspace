@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ColorPickerDialog
 {
@@ -103,15 +94,15 @@ namespace ColorPickerDialog
             if (dataObject.GetDataPresent(DataFormats.Text))
             {
                 string rgbString = (string)dataObject.GetData(DataFormats.Text);
-                Regex regex= RgbRegex();
+                Regex regex = RgbRegex();
                 if (rgbString is not null && regex.IsMatch(rgbString))
                 {
                     string[] rgbStrings = rgbString.Split(',');
                     if (byte.TryParse(rgbStrings[0], out byte r) && byte.TryParse(rgbStrings[1], out byte g) && byte.TryParse(rgbStrings[2], out byte b))
                     {
-                        txtR.Text=r.ToString();
-                        txtG.Text=g.ToString();
-                        txtB.Text=b.ToString();
+                        txtR.Text = r.ToString();
+                        txtG.Text = g.ToString();
+                        txtB.Text = b.ToString();
                     }
                 }
             }
