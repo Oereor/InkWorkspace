@@ -116,7 +116,7 @@ namespace Ink
             if (property.ValueType == ValueType && property.ValueSource != this)
             {
                 property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 同步是通过订阅事件完成的
-                // 可能出现的问题：O1订阅O2，O2订阅O3，……，O(n)订阅O1，然后StackOverflow
+                // 可能出现的问题：O1订阅O2，O2订阅O3，……，O_n订阅O1，然后StackOverflow
                 Value = property.Value;
                 ValueSource = property;
                 valueSourceObject = sourceObject;
@@ -150,7 +150,7 @@ namespace Ink
     {
         private string name = "InkObject";
 
-        protected static Color GetColourFromString(string rgb)
+        protected static Color GetColourFromRgbString(string rgb)
         {
             Regex regex = RgbRegex();
             if (rgb is not null && regex.IsMatch(rgb))
@@ -451,7 +451,7 @@ namespace Ink
             }
             else
             {
-                textBlock.Foreground = new SolidColorBrush(GetColourFromString(foreground));
+                textBlock.Foreground = new SolidColorBrush(GetColourFromRgbString(foreground));
             }
         }
 
@@ -463,7 +463,7 @@ namespace Ink
             }
             else
             {
-                textBlock.Background = new SolidColorBrush(GetColourFromString(background));
+                textBlock.Background = new SolidColorBrush(GetColourFromRgbString(background));
             }
         }
 
@@ -739,7 +739,7 @@ namespace Ink
             }
             else
             {
-                Shape.Stroke = new SolidColorBrush(GetColourFromString(colour));
+                Shape.Stroke = new SolidColorBrush(GetColourFromRgbString(colour));
             }
         }
 
@@ -751,7 +751,7 @@ namespace Ink
             }
             else
             {
-                Shape.Fill = new SolidColorBrush(GetColourFromString(colour));
+                Shape.Fill = new SolidColorBrush(GetColourFromRgbString(colour));
             }
         }
     }
