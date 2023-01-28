@@ -148,7 +148,7 @@ namespace Ink
 
     public abstract partial class InkObject : INotifyPropertyChanged
     {
-        protected string name = "InkObject";
+        private string name = "InkObject";
 
         protected static Color GetColourFromString(string rgb)
         {
@@ -255,7 +255,7 @@ namespace Ink
 
         protected abstract void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e);
 
-        protected void RaiseClickEvent(object sender, MouseButtonEventArgs e)
+        protected void OnClick(object sender, MouseButtonEventArgs e)
         {
             Click?.Invoke(sender, e);
         }
@@ -335,7 +335,7 @@ namespace Ink
             BindTextBoxWithTextBlock();
             textBlock.MouseDown += TextBlock_MouseDown;
             textBox.LostFocus += TextBox_LostFocus;
-            textBox.MouseDown += (sender, e) => RaiseClickEvent(this, e);
+            textBox.MouseDown += (sender, e) => OnClick(this, e);
             Binding binding = new()
             {
                 Source = Properties["Text"],
@@ -384,7 +384,7 @@ namespace Ink
                 IsTextBoxShown = true;
                 textBox.Focus();
             }
-            RaiseClickEvent(this, e);
+            OnClick(this, e);
         }
 
         /* TextBox失去焦点时切回TextBlock */
@@ -403,7 +403,8 @@ namespace Ink
                 case "Text":
                     textBlock.Text = e.NewValue; break;
                 case "Alignment":
-                    SetTextAlignment(e.NewValue);
+                    TextAlignment textAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), e.NewValue);
+                    textBlock.TextAlignment = textAlignment;
                     break;
                 case "TextWrapping":
                     bool textWrapping = bool.Parse(e.NewValue);
@@ -418,8 +419,7 @@ namespace Ink
                 case "FontFamily":
                     if (e.NewValue is not null)
                     {
-                        FontFamily fontFamily = new(e.NewValue);
-                        textBlock.FontFamily = fontFamily;
+                        textBlock.FontFamily = new FontFamily(e.NewValue);
                     }
                     break;
                 case "FontWeight":
@@ -467,50 +467,19 @@ namespace Ink
             }
         }
 
-        //private static Color GetCustomColour()
-        //{
-        //    ColorDialog colorDialog = new(true);
-        //    if (colorDialog.ShowDialog() == true)
-        //    {
-        //        return Color.FromRgb((byte)colorDialog.R, (byte)colorDialog.G, (byte)colorDialog.B);
-        //    }
-        //    else
-        //    {
-        //        return Colors.Transparent;
-        //    }
-        //}
-
-        private void SetTextAlignment(string textAlignment)
-        {
-            switch (textAlignment)
-            {
-                case "Left":
-                    textBlock.TextAlignment = TextAlignment.Left;
-                    break;
-                case "Right":
-                    textBlock.TextAlignment = TextAlignment.Right;
-                    break;
-                case "Center":
-                    textBlock.TextAlignment = TextAlignment.Center;
-                    break;
-                case "Justify":
-                    textBlock.TextAlignment = TextAlignment.Justify;
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private void SetFontWeight(string fontWeight)
         {
             switch (fontWeight)
             {
                 case "Light":
-                    textBlock.FontWeight = FontWeights.Light; break;
+                    textBlock.FontWeight = FontWeights.Light; 
+                    break;
                 case "Regular":
-                    textBlock.FontWeight = FontWeights.Regular; break;
+                    textBlock.FontWeight = FontWeights.Regular; 
+                    break;
                 case "Bold":
-                    textBlock.FontWeight = FontWeights.Bold; break;
+                    textBlock.FontWeight = FontWeights.Bold; 
+                    break;
                 default:
                     break;
             }
@@ -661,7 +630,7 @@ namespace Ink
             Y = 114;
             Width = 128;
             Height = 128;
-            image.MouseDown += (sender, e) => RaiseClickEvent(this, e);
+            image.MouseDown += (sender, e) => OnClick(this, e);
             image.MouseRightButtonUp += (sender, e) => MouseRightButtonUp?.Invoke(this, e);
         }
 
@@ -734,7 +703,7 @@ namespace Ink
             }
             X = 514;
             Y = 114;
-            Shape.MouseDown += (sender, e) => RaiseClickEvent(this, e);
+            Shape.MouseDown += (sender, e) => OnClick(this, e);
         }
 
         public override Dictionary<string, InkProperty> Properties { get; }
