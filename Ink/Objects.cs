@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -260,6 +261,15 @@ namespace Ink
             Click?.Invoke(sender, e);
         }
 
+        protected void AddInkPropertyValueChangedEventHandler()
+        {
+            foreach (InkProperty property in Properties.Values)
+            {
+                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
+                property.Value = property.DefaultValue;
+            }
+        }
+
         [GeneratedRegex("^\\d{3}\\s*,\\s*\\d{3}\\s*,\\s*\\d{3}$")]
         private static partial Regex RgbRegex();
     }
@@ -325,11 +335,7 @@ namespace Ink
                 { "Foreground", new InkProperty("Foreground", InkPropertyValueType.Input, "000,000,000") },
                 { "Background", new InkProperty("Background", InkPropertyValueType.Input, string.Empty) }
             };
-            foreach (InkProperty property in Properties.Values)
-            {
-                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;   // 以便在Property更新时同时更新前端的显示
-                property.Value = property.DefaultValue;
-            }
+            AddInkPropertyValueChangedEventHandler();
             X = 514;
             Y = 114;
             BindTextBoxWithTextBlock();
@@ -472,13 +478,13 @@ namespace Ink
             switch (fontWeight)
             {
                 case "Light":
-                    textBlock.FontWeight = FontWeights.Light; 
+                    textBlock.FontWeight = FontWeights.Light;
                     break;
                 case "Regular":
-                    textBlock.FontWeight = FontWeights.Regular; 
+                    textBlock.FontWeight = FontWeights.Regular;
                     break;
                 case "Bold":
-                    textBlock.FontWeight = FontWeights.Bold; 
+                    textBlock.FontWeight = FontWeights.Bold;
                     break;
                 default:
                     break;
@@ -621,11 +627,7 @@ namespace Ink
                 { "Stretch", new InkProperty("Stretch", InkPropertyValueType.List, "Uniform")
                 { ValueList = new string[] { "Uniform", "Fill", "UniformToFill", "None" } } }
             };
-            foreach (InkProperty property in Properties.Values)
-            {
-                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
-                property.Value = property.DefaultValue;
-            }
+            AddInkPropertyValueChangedEventHandler();
             X = 514;
             Y = 114;
             Width = 128;
@@ -691,11 +693,7 @@ namespace Ink
             };
             if (Properties is not null)
             {
-                foreach (InkProperty property in Properties.Values)
-                {
-                    property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
-                    property.Value = property.DefaultValue;
-                }
+                AddInkPropertyValueChangedEventHandler();
             }
             else
             {
@@ -803,11 +801,7 @@ namespace Ink
                 { "StartPoint", new InkProperty("StartPoint", InkPropertyValueType.Input, "0,114") },
                 { "EndPoint", new InkProperty("EndPoint", InkPropertyValueType.Input, "514,0") },
             };
-            foreach (InkProperty property in Properties.Values)
-            {
-                property.InkPropertyValueChanged += Property_InkPropertyValueChanged;
-                property.Value = property.DefaultValue;
-            }
+            AddInkPropertyValueChangedEventHandler();
         }
 
         public override string Type => "Line";
@@ -862,13 +856,18 @@ namespace Ink
 
         public InkSketchpad(string name) : base(name)
         {
+            Properties = new Dictionary<string, InkProperty>()
+            {
+                { "Background", new InkProperty("Background", InkPropertyValueType.Input, "255,255,230") },
+            };
+            AddInkPropertyValueChangedEventHandler();
             X = 514;
             Y = 114;
         }
 
         public override string Type => "Sketchpad";
 
-        public override Dictionary<string, InkProperty> Properties { get; } = new();
+        public override Dictionary<string, InkProperty> Properties { get; }
 
         protected override FrameworkElement ShownElement => inkCanvas;
 
@@ -876,8 +875,23 @@ namespace Ink
         {
             switch (e.PropertyName)
             {
+                case "Background":
+                    SetBackground(e.NewValue);
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private void SetBackground(string background)
+        {
+            if (background == string.Empty)
+            {
+                inkCanvas.Background = new SolidColorBrush(Colors.White);
+            }
+            else
+            {
+                inkCanvas.Background = new SolidColorBrush(GetColourFromRgbString(background));
             }
         }
     }
