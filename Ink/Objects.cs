@@ -855,4 +855,30 @@ namespace Ink
             }
         }
     }
+
+    public class InkSketchpad : InkObject
+    {
+        private readonly InkCanvas inkCanvas = new();
+
+        public InkSketchpad(string name) : base(name)
+        {
+            X = 514;
+            Y = 114;
+        }
+
+        public override string Type => "Sketchpad";
+
+        public override Dictionary<string, InkProperty> Properties { get; } = new();
+
+        protected override FrameworkElement ShownElement => inkCanvas;
+
+        protected override void Property_InkPropertyValueChanged(object sender, InkPropertyValueChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                default:
+                    break;
+            }
+        }
+    }
 }

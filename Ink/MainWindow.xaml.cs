@@ -16,7 +16,6 @@ namespace Ink
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    [Serializable]
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -754,11 +753,21 @@ namespace Ink
             inkShape.PropertyChanged += InkObject_PositionChanged;
             comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
         }
+
+        private void MenuItem_NewSketchpad_Click(object sender, RoutedEventArgs e)
+        {
+            InkSketchpad inkSketchpad = new($"Sketchpad{sketchpadCounter++}");
+            currentPage.Objects.Add(inkSketchpad);
+            inkSketchpad.AddToPage(canvas_Page);
+            inkSketchpad.PropertyChanged+= InkObject_PositionChanged;
+            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+        }
     }
 
     public partial class MainWindow : Window
     {
-        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1, ellipseCounter = 1, rectangleCounter = 1, lineCounter = 1;
+        private int pageCounter = 1, textBoxCounter = 1, imageBoxCounter = 1, 
+            ellipseCounter = 1, rectangleCounter = 1, lineCounter = 1, sketchpadCounter = 1;
         private readonly ObservableCollection<InkPage> pages;
         private InkPage currentPage;
         private InkObject? currentObject;

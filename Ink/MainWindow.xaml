@@ -54,6 +54,7 @@
                 <MenuItem Header="New line" Click="MenuItem_NewInkShape_Click"/>
                 <MenuItem Header="New ellipse" Click="MenuItem_NewInkShape_Click"/>
                 <MenuItem Header="New rectangle" Click="MenuItem_NewInkShape_Click"/>
+                <MenuItem Header="New sketchpad" Click="MenuItem_NewSketchpad_Click" IsEnabled="False"/>
                 <Separator/>
                 <MenuItem Header="Remove all text boxes on page" Click="MenuItem_RemoveAllTextBoxes_Click"/>
                 <MenuItem Header="Remove all image boxes on page" Click="MenuItem_RemoveAllImageBoxes_Click"/>
