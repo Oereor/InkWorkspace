@@ -147,6 +147,24 @@ namespace Ink
         }
     }
 
+    public class InkAction
+    {
+        private readonly Action<string> action;
+
+        public InkAction(string name, Action<string> action)
+        {
+            this.action = action;
+            Name = name;
+        }
+
+        public string Name { get; }
+
+        public void Invoke(string arg)
+        {
+            action(arg);
+        }
+    }
+
     public abstract partial class InkObject : INotifyPropertyChanged
     {
         private string name = "InkObject";
@@ -228,6 +246,7 @@ namespace Ink
         }
         public abstract string Type { get; }    // 并没有很大的实际意义
         public abstract Dictionary<string, InkProperty> Properties { get; }
+        public abstract Dictionary<string, InkAction>? Actions { get; }
 
         protected abstract FrameworkElement ShownElement { get; }   // 实际显示出来的控件
 
@@ -357,6 +376,8 @@ namespace Ink
         public override string Type => "Text Box";
 
         public override Dictionary<string, InkProperty> Properties { get; }
+
+        public override Dictionary<string, InkAction>? Actions { get; } = null;
 
         protected override FrameworkElement ShownElement => IsTextBoxShown ? textBox : textBlock;
 
@@ -676,6 +697,8 @@ namespace Ink
 
         public override Dictionary<string, InkProperty> Properties { get; }
 
+        public override Dictionary<string, InkAction>? Actions { get; } = null;
+
         protected override FrameworkElement ShownElement => image;
 
         public event MouseButtonEventHandler? MouseRightButtonUp;
@@ -705,6 +728,8 @@ namespace Ink
         }
 
         public override Dictionary<string, InkProperty> Properties { get; }
+
+        public override Dictionary<string, InkAction>? Actions { get; } = null;
 
         protected abstract Shape Shape { get; }
 
@@ -858,9 +883,14 @@ namespace Ink
         {
             Properties = new Dictionary<string, InkProperty>()
             {
-                { "Background", new InkProperty("Background", InkPropertyValueType.Input, "255,255,230") },
+                ["Background"] = new InkProperty("Background", InkPropertyValueType.Input, "255,255,230")
             };
             AddInkPropertyValueChangedEventHandler();
+            Actions = new Dictionary<string, InkAction>()
+            {
+                ["Clear"] = new InkAction("Clear", ClearAction),
+                ["Undo"] = new InkAction("Undo", UndoAction)
+            };
             X = 514;
             Y = 114;
         }
@@ -868,6 +898,8 @@ namespace Ink
         public override string Type => "Sketchpad";
 
         public override Dictionary<string, InkProperty> Properties { get; }
+
+        public override Dictionary<string, InkAction>? Actions { get; }
 
         protected override FrameworkElement ShownElement => inkCanvas;
 
@@ -892,6 +924,27 @@ namespace Ink
             else
             {
                 inkCanvas.Background = new SolidColorBrush(GetColourFromRgbString(background));
+            }
+        }
+
+        private void ClearAction(string arg)
+        {
+            inkCanvas.Strokes.Clear();
+        }
+
+        private void UndoAction(string arg)
+        {
+            int stepsToUndo = 1;
+            if (!string.IsNullOrWhiteSpace(arg) && int.TryParse(arg, out int step))
+            {
+                stepsToUndo = step;
+            }
+            if (stepsToUndo <= inkCanvas.Strokes.Count)
+            {
+                for (int i = 0; i < stepsToUndo; i++)
+                {
+                    inkCanvas.Strokes.RemoveAt(inkCanvas.Strokes.Count - 1);
+                }
             }
         }
     }
