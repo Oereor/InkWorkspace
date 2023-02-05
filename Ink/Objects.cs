@@ -151,17 +151,20 @@ namespace Ink
     {
         private readonly Action<string> action;
 
-        public InkAction(string name, Action<string> action)
+        public InkAction(string name, Action<string> action, string argDescription = "Argument")
         {
             this.action = action;
             Name = name;
+            ArgDescription = argDescription;
         }
 
         public string Name { get; }
 
+        public string ArgDescription { get; }
+
         public void Invoke(string arg)
         {
-            action(arg);
+            action.Invoke(arg);
         }
     }
 
@@ -332,27 +335,23 @@ namespace Ink
         {
             Properties = new Dictionary<string, InkProperty>()
             {
-                { "Text", new InkProperty("Text", InkPropertyValueType.Input, "Text here") },
+                ["Text"] = new InkProperty("Text", InkPropertyValueType.Input, "Text here"),
 
-                { "Alignment", new InkProperty("Alignment", InkPropertyValueType.List, "Left")
-                { ValueList = new string[] { "Left", "Right", "Center", "Justify" } } },
+                ["Alignment"] = new InkProperty("Alignment", InkPropertyValueType.List, "Left") { ValueList = new string[] { "Left", "Right", "Center", "Justify" } },
 
-                { "TextWrapping", new InkProperty("TextWrapping", InkPropertyValueType.Boolean, "True") },
-                { "FontSize", new InkProperty("FontSize", InkPropertyValueType.Input, "18") },
+                ["TextWrapping"] = new InkProperty("TextWrapping", InkPropertyValueType.Boolean, "True"),
+                ["FontSize"] = new InkProperty("FontSize", InkPropertyValueType.Input, "18"),
 
-                { "FontFamily", new InkProperty("FontFamily", InkPropertyValueType.List, "Times New Roman")
-                { ValueList = GetInstalledFonts() } },
+                ["FontFamily"] = new InkProperty("FontFamily", InkPropertyValueType.List, "Times New Roman") { ValueList = GetInstalledFonts() },
 
-                { "FontWeight", new InkProperty("FontWeight", InkPropertyValueType.List, "Regular")
-                { ValueList = new string[] { "Light", "Regular", "Bold" } } },
+                ["FontWeight"] = new InkProperty("FontWeight", InkPropertyValueType.List, "Regular") { ValueList = new string[] { "Light", "Regular", "Bold" } },
 
-                { "Italic", new InkProperty("Italic", InkPropertyValueType.Boolean, "False") },
+                ["Italic"] = new InkProperty("Italic", InkPropertyValueType.Boolean, "False"),
 
-                { "Lines", new InkProperty("Lines", InkPropertyValueType.List, "NoLine")
-                { ValueList = new string[] { "NoLine", "UnderLine", "OverLine", "Strikethrough" } } },
+                ["Lines"] = new InkProperty("Lines", InkPropertyValueType.List, "NoLine") { ValueList = new string[] { "NoLine", "UnderLine", "OverLine", "Strikethrough" } },
 
-                { "Foreground", new InkProperty("Foreground", InkPropertyValueType.Input, "000,000,000") },
-                { "Background", new InkProperty("Background", InkPropertyValueType.Input, string.Empty) }
+                ["Foreground"] = new InkProperty("Foreground", InkPropertyValueType.Input, "000,000,000"),
+                ["Background"] = new InkProperty("Background", InkPropertyValueType.Input, string.Empty)
             };
             AddInkPropertyValueChangedEventHandler();
             X = 514;
@@ -472,7 +471,7 @@ namespace Ink
 
         private void SetForeground(string foreground)
         {
-            if (foreground == string.Empty)
+            if (string.IsNullOrWhiteSpace(foreground))
             {
                 textBlock.Foreground = new SolidColorBrush(Colors.Transparent);
             }
@@ -484,7 +483,7 @@ namespace Ink
 
         private void SetBackground(string background)
         {
-            if (background == string.Empty)
+            if (string.IsNullOrWhiteSpace(background))
             {
                 textBlock.Background = new SolidColorBrush(Colors.Transparent);
             }
@@ -643,10 +642,9 @@ namespace Ink
         {
             Properties = new Dictionary<string, InkProperty>
             {
-                { "ImagePath", new InkProperty("ImagePath", InkPropertyValueType.Input, @"/PowerInk.png") },
+                ["ImagePath"] = new InkProperty("ImagePath", InkPropertyValueType.Input, @"/PowerInk.png"),
 
-                { "Stretch", new InkProperty("Stretch", InkPropertyValueType.List, "Uniform")
-                { ValueList = new string[] { "Uniform", "Fill", "UniformToFill", "None" } } }
+                ["Stretch"] = new InkProperty("Stretch", InkPropertyValueType.List, "Uniform") { ValueList = new string[] { "Uniform", "Fill", "UniformToFill", "None" } }
             };
             AddInkPropertyValueChangedEventHandler();
             X = 514;
@@ -675,7 +673,7 @@ namespace Ink
 
         private void SetImageSource(string uri)
         {
-            if (uri == string.Empty)
+            if (string.IsNullOrWhiteSpace(uri))
             {
                 image.Source = new BitmapImage(new Uri(Properties["ImagePath"].DefaultValue, UriKind.Relative));
             }
@@ -710,9 +708,9 @@ namespace Ink
         {
             Properties = new Dictionary<string, InkProperty>()
             {
-                { "Stroke", new InkProperty("Stroke", InkPropertyValueType.Input, "000,000,000") },
-                { "StrokeThickness", new InkProperty("StrokeThickness", InkPropertyValueType.Input, "1") },
-                { "Fill", new InkProperty("Fill", InkPropertyValueType.Input, string.Empty) }
+                ["Stroke"] = new InkProperty("Stroke", InkPropertyValueType.Input, "000,000,000"),
+                ["StrokeThickness"] = new InkProperty("StrokeThickness", InkPropertyValueType.Input, "1"),
+                ["Fill"] = new InkProperty("Fill", InkPropertyValueType.Input, string.Empty)
             };
             if (Properties is not null)
             {
@@ -756,7 +754,7 @@ namespace Ink
 
         protected void SetStroke(string colour)
         {
-            if (colour == string.Empty)
+            if (string.IsNullOrWhiteSpace(colour))
             {
                 Shape.Stroke = new SolidColorBrush(Colors.Transparent);
             }
@@ -768,7 +766,7 @@ namespace Ink
 
         protected void SetFill(string colour)
         {
-            if (colour == string.Empty)
+            if (string.IsNullOrWhiteSpace(colour))
             {
                 Shape.Fill = new SolidColorBrush(Colors.Transparent);
             }
@@ -821,10 +819,10 @@ namespace Ink
         {
             Properties = new Dictionary<string, InkProperty>()
             {
-                { "Stroke", new InkProperty("Stroke", InkPropertyValueType.Input, "000,000,000") },
-                { "StrokeThickness", new InkProperty("StrokeThickness", InkPropertyValueType.Input, "1") },
-                { "StartPoint", new InkProperty("StartPoint", InkPropertyValueType.Input, "0,114") },
-                { "EndPoint", new InkProperty("EndPoint", InkPropertyValueType.Input, "514,0") },
+                ["Stroke"] = new InkProperty("Stroke", InkPropertyValueType.Input, "000,000,000"),
+                ["StrokeThickness"] = new InkProperty("StrokeThickness", InkPropertyValueType.Input, "1"),
+                ["StartPoint"] = new InkProperty("StartPoint", InkPropertyValueType.Input, "0,114"),
+                ["EndPoint"] = new InkProperty("EndPoint", InkPropertyValueType.Input, "514,0"),
             };
             AddInkPropertyValueChangedEventHandler();
         }
@@ -888,8 +886,8 @@ namespace Ink
             AddInkPropertyValueChangedEventHandler();
             Actions = new Dictionary<string, InkAction>()
             {
-                ["Clear"] = new InkAction("Clear", ClearAction),
-                ["Undo"] = new InkAction("Undo", UndoAction)
+                ["Clear"] = new InkAction("Clear", ClearAction, "No argument required"),
+                ["Undo"] = new InkAction("Undo", UndoAction, "Step")
             };
             X = 514;
             Y = 114;
@@ -917,7 +915,7 @@ namespace Ink
 
         private void SetBackground(string background)
         {
-            if (background == string.Empty)
+            if (string.IsNullOrWhiteSpace(background))
             {
                 inkCanvas.Background = new SolidColorBrush(Colors.White);
             }
@@ -927,7 +925,7 @@ namespace Ink
             }
         }
 
-        private void ClearAction(string arg)
+        private void ClearAction(string arg)    // 命名规则：每个InkAction包装的方法名应是“操作名称+Action”
         {
             inkCanvas.Strokes.Clear();
         }
