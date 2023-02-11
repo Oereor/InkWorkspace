@@ -887,7 +887,7 @@ namespace Ink
             Actions = new Dictionary<string, InkAction>()
             {
                 ["Clear"] = new InkAction("Clear", ClearAction, "No argument required"),
-                ["Undo"] = new InkAction("Undo", UndoAction, "Step")
+                ["Undo"] = new InkAction("Undo", UndoAction, "Step to undo")
             };
             X = 514;
             Y = 114;
