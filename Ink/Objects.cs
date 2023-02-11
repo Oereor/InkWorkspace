@@ -164,7 +164,7 @@ namespace Ink
 
         public void Invoke(string arg)
         {
-            action.Invoke(arg);
+            action(arg);
         }
     }
 
@@ -266,12 +266,12 @@ namespace Ink
             return Name;
         }
 
-        public virtual void AddToPage(Canvas page)
+        public virtual void AddToPage(Panel page)
         {
             page.Children.Add(ShownElement);
         }
 
-        public void RemoveFromPage(Canvas page)
+        public void RemoveFromPage(Panel page)
         {
             page.Children.Remove(ShownElement);
         }
@@ -335,7 +335,7 @@ namespace Ink
         {
             Properties = new Dictionary<string, InkProperty>()
             {
-                ["Text"] = new InkProperty("Text", InkPropertyValueType.Input, "Text here"),
+                ["Text"] = new InkProperty("Text", InkPropertyValueType.Input, name),
 
                 ["Alignment"] = new InkProperty("Alignment", InkPropertyValueType.List, "Left") { ValueList = new string[] { "Left", "Right", "Center", "Justify" } },
 
@@ -380,7 +380,7 @@ namespace Ink
 
         protected override FrameworkElement ShownElement => IsTextBoxShown ? textBox : textBlock;
 
-        public override void AddToPage(Canvas page)
+        public override void AddToPage(Panel page)
         {
             page.Children.Add(textBlock);
             page.Children.Add(textBox);
@@ -859,7 +859,7 @@ namespace Ink
             }
         }
 
-        private static (double x, double y) GetCoordinateFromString(string coordinate)
+        private static (double X, double Y) GetCoordinateFromString(string coordinate)
         {
             string[] coordinates = coordinate.Split(',');
             if (coordinates.Length == 2 && double.TryParse(coordinates[0], out double xCoordinate) && double.TryParse(coordinates[1], out double yCoordinate))
