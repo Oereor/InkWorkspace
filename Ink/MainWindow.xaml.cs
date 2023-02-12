@@ -168,11 +168,7 @@ namespace Ink
         private void MenuItem_NewTextBox_Click(object sender, RoutedEventArgs e)
         {
             InkTextBox inkTextBox = new($"TextBox{textBoxCounter++}");
-            currentPage.Objects.Add(inkTextBox);
-            inkTextBox.AddToPage(canvas_Page);
-            inkTextBox.Click += InkObject_Click;
-            inkTextBox.PropertyChanged += InkObject_PositionChanged;
-            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+            AddNewInkObject(inkTextBox);
         }
 
         private void InkObject_PositionChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -595,12 +591,8 @@ namespace Ink
         private void MenuItem_NewImageBox_Click(object sender, RoutedEventArgs e)
         {
             InkImageBox inkImageBox = new($"ImageBox{imageBoxCounter++}");
-            currentPage.Objects.Add(inkImageBox);
-            inkImageBox.AddToPage(canvas_Page);
-            inkImageBox.Click += InkObject_Click;
             inkImageBox.MouseRightButtonUp += InkImageBox_MouseRightButtonDown;
-            inkImageBox.PropertyChanged += InkObject_PositionChanged;
-            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+            AddNewInkObject(inkImageBox);
         }
 
         private void InkImageBox_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -747,10 +739,15 @@ namespace Ink
 
         private void AddNewInkShape(InkShape inkShape)
         {
-            currentPage.Objects.Add(inkShape);
-            inkShape.AddToPage(canvas_Page);
-            inkShape.Click += InkObject_Click;
-            inkShape.PropertyChanged += InkObject_PositionChanged;
+            AddNewInkObject(inkShape);
+        }
+
+        private void AddNewInkObject<T>(T inkObject) where T : InkObject
+        {
+            currentPage.Objects.Add(inkObject);
+            inkObject.AddToPage(canvas_Page);
+            inkObject.Click += InkObject_Click;
+            inkObject.PropertyChanged += InkObject_PositionChanged;
             comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
         }
 
