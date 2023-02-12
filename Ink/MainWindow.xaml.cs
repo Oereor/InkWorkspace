@@ -754,10 +754,7 @@ namespace Ink
         private void MenuItem_NewSketchpad_Click(object sender, RoutedEventArgs e)
         {
             InkSketchpad inkSketchpad = new($"Sketchpad{sketchpadCounter++}");
-            currentPage.Objects.Add(inkSketchpad);
-            inkSketchpad.AddToPage(canvas_Page);
-            inkSketchpad.PropertyChanged+= InkObject_PositionChanged;
-            comboBox_Objects.SelectedIndex = comboBox_Objects.Items.Count - 1;
+            AddNewInkObject(inkSketchpad);
         }
     }
 
