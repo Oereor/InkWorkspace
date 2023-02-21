@@ -1,2 +1,2 @@
 # InkWorkspace
-第一阶段开发已完成。The first stage of development has completed. 
+## 本仓库不再维护，请前往[Oereor/PowerInkWorkspace](https://github.com/Oereor/PowerInkWorkspace)以获取最新开发进展。This repository is no longer maintained. Please go to [Oereor/PowerInkWorkspace](https://github.com/Oereor/PowerInkWorkspace) for newest development progress. 
